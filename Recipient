@@ -1,0 +1,6 @@
+INSERT INTO 'Recipient' (`Nom_Recipient`, `Contenance_Recipient`, `Prix_Recipient`, `ID_Onguent`, `ID_Potion`) VALUES
+('Fiole', '2', '5',  '', ''),
+('Erlenmeyer ','3', '10',  '',''),
+('Pot', '4', '15', ''),
+('Marmite', '10', '20', '', ''),
+('Tube', '1', '2', '', '');
