@@ -1,0 +1,4 @@
+INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`ID_Progression`) VALUES
+('150','12 Octobre 2017','10','1')
+('140','13 Octobre 2017','11','2')
+('130','14 Octobre 2017','12','3')
