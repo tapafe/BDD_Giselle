@@ -2,3 +2,8 @@ INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`
 ('150','12 Octobre 2017','10','1')
 ('140','13 Octobre 2017','11','2')
 ('130','14 Octobre 2017','12','3')
+
+
+Insert INTO `societe` (`NoSiret`,`Nom_Societe`,`Adresse_Societe`,`Ville_Societe`,`Mail_Societe`,`ID_Commande`) VALUES
+('1254','Magic IT','224 résidance de poudlard','Genève','MagicIT@hotmail.fr','2');
+
