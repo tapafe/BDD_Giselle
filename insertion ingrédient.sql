@@ -1,0 +1,23 @@
+INSERT into `Ingredient`(`Nom_Ingredient`, `Prix_Ingredient`, `Temps_Conservation`, `Seuil_Fraicheur`)
+VALUES
+('racines de marguerite', '9', '32', '20'),
+('chenilles', '5', '19', '10'),
+('orties sechees', '4', '45', '35'),
+('crochets de serpent', '12', '50', '40'),
+('epines de poro', '3', '40', '32'),
+('foie de rat', '8', '10', '6'),
+('poudre de pierre de la lune', '18', '150', '130'),
+('sirop d ellebore', '15', '50', '38'),
+('aile d aigle', '20', '62','50'),
+('plume de phenix', '15', '48', '40'),
+('oeuf de dragon ', '100', '80', '70'),
+('ecaille de dragon', '23', '60', '52'),
+('racines de valeriane', '8', '46', '40'),
+('feuille soporifique', '5', '20', '15'),
+('armoise', '23', '35', '28'),
+('scarabees', '40', '25', '20'),
+('racines de gingembre', '18', '37', '29'),
+('bile de tatou', '18', '36', '30'),
+('baies de gui', '13', '40', '28'),
+('brins de valeriane', '12', '34', '28'),
+('corne de dragon', '120', '90', '70');
