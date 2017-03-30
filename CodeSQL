@@ -19,8 +19,8 @@ INSERT INTO `inventeur` (`Nom_Inventeur`, `Prenom_Inventeur`) VALUES
 
 -- Remplie Clients --
 
-INSERT INTO `clients` (`Nom_Client`, `Prenom_Client`, `Tel_Client`, `Civilite`, `Code_Postal`, `Ville_Client`, `Adresse_Client`, `Mail`, `ID_Inventeur`) VALUES
-('Fuche', 'Ysolda', 0654244798, 'F', 77333, 'Unilo', '47 avenue de la longue vue', 'ysolda.fuche@baguette.com', '9');
+INSERT INTO `clients` (`Nom_Client`, `Prenom_Client`, `Tel_Client`, `Civilite`, `Code_Postal`, `Ville_Client`, `Adresse_Client`, `Mail`, `ID_Commande` `ID_Inventeur`) VALUES
+('Fuche', 'Ysolda', 0654244798, 'F', 77333, 'Unilo', '47 avenue', 'ysolda.fuche@baguette.com', 3, NULL);com', 3, NULL);
 
 --Remplie Societe --
 
