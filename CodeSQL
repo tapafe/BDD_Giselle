@@ -41,3 +41,5 @@ VALUES
 ('henri kaval', '0696857412', 'hikaval@hotmail.com'),
 ('polo damido', '0636251458', 'polodam@orange.fr'),
 ('lea brouha', '0632549815', 'leabrobro@hotmail.fr');
+
+INSERT INTO `Frigo` (`Date_Entrer`,`Arrive_Depuis`,`Quantite_par_date`,`ID_Ingredient`) VALUES
