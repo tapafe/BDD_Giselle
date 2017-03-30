@@ -96,8 +96,6 @@ CREATE TABLE Recipient(
         Nom_Recipient        Text NOT NULL ,
         Contenance_Recipient Int NOT NULL ,
         Prix_Recipient       DECIMAL (15,3)  NOT NULL ,
-        ID_Onguent           Int ,
-        ID_Potion            Int NOT NULL ,
         PRIMARY KEY (ID_Recipient )
 )ENGINE=InnoDB;
 
@@ -110,6 +108,7 @@ CREATE TABLE Onguent(
         ID_Onguent   int (11) Auto_increment  NOT NULL ,
         Nom_Onguent  Varchar (25) NOT NULL ,
         Prix_Onguent DECIMAL (15,3)  NOT NULL ,
+        ID_Recipient Int NOT NULL ,
         PRIMARY KEY (ID_Onguent )
 )ENGINE=InnoDB;
 
@@ -135,6 +134,7 @@ CREATE TABLE Potion(
         Prix_Potion  DECIMAL (15,3)  ,
         Temperature  Int NOT NULL ,
         ID_Diluant   Int ,
+        ID_Recipient Int NOT NULL ,
         ID_Inventeur Int ,
         PRIMARY KEY (ID_Potion )
 )ENGINE=InnoDB;
@@ -240,9 +240,9 @@ CREATE TABLE Contient_Onguent(
 ALTER TABLE Clients ADD CONSTRAINT FK_Clients_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
 ALTER TABLE Clients ADD CONSTRAINT FK_Clients_ID_Inventeur FOREIGN KEY (ID_Inventeur) REFERENCES Inventeur(ID_Inventeur);
 ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Progression FOREIGN KEY (ID_Progression) REFERENCES Progression(ID_Progression);
-ALTER TABLE Recipient ADD CONSTRAINT FK_Recipient_ID_Onguent FOREIGN KEY (ID_Onguent) REFERENCES Onguent(ID_Onguent);
-ALTER TABLE Recipient ADD CONSTRAINT FK_Recipient_ID_Potion FOREIGN KEY (ID_Potion) REFERENCES Potion(ID_Potion);
+ALTER TABLE Onguent ADD CONSTRAINT FK_Onguent_ID_Recipient FOREIGN KEY (ID_Recipient) REFERENCES Recipient(ID_Recipient);
 ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Diluant FOREIGN KEY (ID_Diluant) REFERENCES Diluant(ID_Diluant);
+ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Recipient FOREIGN KEY (ID_Recipient) REFERENCES Recipient(ID_Recipient);
 ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Inventeur FOREIGN KEY (ID_Inventeur) REFERENCES Inventeur(ID_Inventeur);
 ALTER TABLE Frigo ADD CONSTRAINT FK_Frigo_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
 ALTER TABLE Societe ADD CONSTRAINT FK_Societe_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
