@@ -1,0 +1,260 @@
+#------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
+
+
+#------------------------------------------------------------
+# Table: Clients
+#------------------------------------------------------------
+
+CREATE TABLE Clients(
+        ID_Client      int (11) Auto_increment  NOT NULL ,
+        Nom_Client     Varchar (25) NOT NULL ,
+        Prenom_Client  Varchar (25) NOT NULL ,
+        Tel_Client     Int NOT NULL ,
+        Civilite       Varchar (25) NOT NULL ,
+        Code_Postal    Int NOT NULL ,
+        Ville_Client   Varchar (25) NOT NULL ,
+        Adresse_client Varchar (25) NOT NULL ,
+        Mail           Varchar (25) NOT NULL ,
+        ID_commande    Int NOT NULL ,
+        ID_Inventeur   Int ,
+        PRIMARY KEY (ID_Client ,ID_commande )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Ingredient
+#------------------------------------------------------------
+
+CREATE TABLE Ingredient(
+        ID_Ingredient      int (11) Auto_increment  NOT NULL ,
+        Nom_Ingredient     Varchar (25) NOT NULL ,
+        Prix_Ingredient    DECIMAL (15,3)  NOT NULL ,
+        Temps_Conservation Numeric NOT NULL ,
+        Seuil_Fraicheur    Int ,
+        PRIMARY KEY (ID_Ingredient )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Inventeur
+#------------------------------------------------------------
+
+CREATE TABLE Inventeur(
+        ID_Inventeur     int (11) Auto_increment  NOT NULL ,
+        Nom_Inventeur    Varchar (25) NOT NULL ,
+        Prenom_inventeur Varchar (25) NOT NULL ,
+        PRIMARY KEY (ID_Inventeur )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Commande
+#------------------------------------------------------------
+
+CREATE TABLE Commande(
+        ID_commande         int (11) Auto_increment  NOT NULL ,
+        Prix_Commande_Total DECIMAL (15,3)  NOT NULL ,
+        Date_De_Commande    Date NOT NULL ,
+        No_Commande         Int NOT NULL ,
+        ID_Progression      Int ,
+        PRIMARY KEY (ID_commande )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Progression
+#------------------------------------------------------------
+
+CREATE TABLE Progression(
+        ID_Progression     int (11) Auto_increment  NOT NULL ,
+        Statut_Progression Varchar (25) NOT NULL ,
+        PRIMARY KEY (ID_Progression )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Fournisseur
+#------------------------------------------------------------
+
+CREATE TABLE Fournisseur(
+        ID_Fournisseur   int (11) Auto_increment  NOT NULL ,
+        Nom_Fournisseur  Varchar (25) NOT NULL ,
+        Tel_Fournisseur  Int ,
+        Mail_Fournisseur Varchar (50) ,
+        PRIMARY KEY (ID_Fournisseur )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Recipient
+#------------------------------------------------------------
+
+CREATE TABLE Recipient(
+        ID_Recipient         int (11) Auto_increment  NOT NULL ,
+        Nom_Recipient        Text NOT NULL ,
+        Contenance_Recipient Int NOT NULL ,
+        Prix_Recipient       DECIMAL (15,3)  NOT NULL ,
+        ID_Onguent           Int ,
+        ID_Potion            Int NOT NULL ,
+        PRIMARY KEY (ID_Recipient )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Onguent
+#------------------------------------------------------------
+
+CREATE TABLE Onguent(
+        ID_Onguent   int (11) Auto_increment  NOT NULL ,
+        Nom_Onguent  Varchar (25) NOT NULL ,
+        Prix_Onguent DECIMAL (15,3)  NOT NULL ,
+        PRIMARY KEY (ID_Onguent )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Diluant
+#------------------------------------------------------------
+
+CREATE TABLE Diluant(
+        ID_Diluant  int (11) Auto_increment  NOT NULL ,
+        Nom_Diluant Varchar (25) NOT NULL ,
+        PRIMARY KEY (ID_Diluant )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Potion
+#------------------------------------------------------------
+
+CREATE TABLE Potion(
+        ID_Potion    int (11) Auto_increment  NOT NULL ,
+        Nom_Potion   Varchar (25) NOT NULL ,
+        Prix_Potion  DECIMAL (15,3)  ,
+        Temperature  Int NOT NULL ,
+        ID_Diluant   Int ,
+        ID_Inventeur Int ,
+        PRIMARY KEY (ID_Potion )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Frigo
+#------------------------------------------------------------
+
+CREATE TABLE Frigo(
+        ID_Frigo          int (11) Auto_increment  NOT NULL ,
+        Date_Entrer       Date NOT NULL ,
+        Arrive_Depuis     Int NOT NULL ,
+        Quantite_par_date Int ,
+        ID_Ingredient     Int NOT NULL ,
+        PRIMARY KEY (ID_Frigo )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Societe
+#------------------------------------------------------------
+
+CREATE TABLE Societe(
+        ID_Societe      int (11) Auto_increment  NOT NULL ,
+        NoSiret         Int ,
+        Nom_Societe     Varchar (255) ,
+        Adresse_Societe Varchar (255) ,
+        Ville_Societe   Varchar (255) ,
+        Mail_Societe    Varchar (255) ,
+        ID_commande     Int NOT NULL ,
+        PRIMARY KEY (ID_Societe ,ID_commande )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Se compose
+#------------------------------------------------------------
+
+CREATE TABLE Se_compose(
+        Quantite      Int NOT NULL ,
+        ID_Potion     Int NOT NULL ,
+        ID_Ingredient Int NOT NULL ,
+        PRIMARY KEY (ID_Potion ,ID_Ingredient )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Compose
+#------------------------------------------------------------
+
+CREATE TABLE Compose(
+        Quantite      Int NOT NULL ,
+        ID_Ingredient Int NOT NULL ,
+        ID_Onguent    Int NOT NULL ,
+        PRIMARY KEY (ID_Ingredient ,ID_Onguent )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Livre
+#------------------------------------------------------------
+
+CREATE TABLE Livre(
+        ID_Ingredient  Int NOT NULL ,
+        ID_Fournisseur Int NOT NULL ,
+        PRIMARY KEY (ID_Ingredient ,ID_Fournisseur )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Contient_potion
+#------------------------------------------------------------
+
+CREATE TABLE Contient_potion(
+        ID_Potion   Int NOT NULL ,
+        ID_commande Int NOT NULL ,
+        PRIMARY KEY (ID_Potion ,ID_commande )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Contient_Ingredient
+#------------------------------------------------------------
+
+CREATE TABLE Contient_Ingredient(
+        ID_commande   Int NOT NULL ,
+        ID_Ingredient Int NOT NULL ,
+        PRIMARY KEY (ID_commande ,ID_Ingredient )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Contient_Onguent
+#------------------------------------------------------------
+
+CREATE TABLE Contient_Onguent(
+        ID_Onguent  Int NOT NULL ,
+        ID_commande Int NOT NULL ,
+        PRIMARY KEY (ID_Onguent ,ID_commande )
+)ENGINE=InnoDB;
+
+ALTER TABLE Clients ADD CONSTRAINT FK_Clients_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
+ALTER TABLE Clients ADD CONSTRAINT FK_Clients_ID_Inventeur FOREIGN KEY (ID_Inventeur) REFERENCES Inventeur(ID_Inventeur);
+ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Progression FOREIGN KEY (ID_Progression) REFERENCES Progression(ID_Progression);
+ALTER TABLE Recipient ADD CONSTRAINT FK_Recipient_ID_Onguent FOREIGN KEY (ID_Onguent) REFERENCES Onguent(ID_Onguent);
+ALTER TABLE Recipient ADD CONSTRAINT FK_Recipient_ID_Potion FOREIGN KEY (ID_Potion) REFERENCES Potion(ID_Potion);
+ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Diluant FOREIGN KEY (ID_Diluant) REFERENCES Diluant(ID_Diluant);
+ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Inventeur FOREIGN KEY (ID_Inventeur) REFERENCES Inventeur(ID_Inventeur);
+ALTER TABLE Frigo ADD CONSTRAINT FK_Frigo_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE Societe ADD CONSTRAINT FK_Societe_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
+ALTER TABLE Se_compose ADD CONSTRAINT FK_Se_compose_ID_Potion FOREIGN KEY (ID_Potion) REFERENCES Potion(ID_Potion);
+ALTER TABLE Se_compose ADD CONSTRAINT FK_Se_compose_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE Compose ADD CONSTRAINT FK_Compose_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE Compose ADD CONSTRAINT FK_Compose_ID_Onguent FOREIGN KEY (ID_Onguent) REFERENCES Onguent(ID_Onguent);
+ALTER TABLE Livre ADD CONSTRAINT FK_Livre_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE Livre ADD CONSTRAINT FK_Livre_ID_Fournisseur FOREIGN KEY (ID_Fournisseur) REFERENCES Fournisseur(ID_Fournisseur);
+ALTER TABLE Contient_potion ADD CONSTRAINT FK_Contient_potion_ID_Potion FOREIGN KEY (ID_Potion) REFERENCES Potion(ID_Potion);
+ALTER TABLE Contient_potion ADD CONSTRAINT FK_Contient_potion_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
+ALTER TABLE Contient_Ingredient ADD CONSTRAINT FK_Contient_Ingredient_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
+ALTER TABLE Contient_Ingredient ADD CONSTRAINT FK_Contient_Ingredient_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE Contient_Onguent ADD CONSTRAINT FK_Contient_Onguent_ID_Onguent FOREIGN KEY (ID_Onguent) REFERENCES Onguent(ID_Onguent);
+ALTER TABLE Contient_Onguent ADD CONSTRAINT FK_Contient_Onguent_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
