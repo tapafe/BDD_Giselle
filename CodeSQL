@@ -31,3 +31,13 @@ Insert INTO `societe` (`NoSiret`,`Nom_Societe`,`Adresse_Societe`,`Ville_Societe`
 ('5495','Sort company','45 rue des Malfoy','Marseille','SortCpy@hotmail.fr','8')
 ('9865''Magic&Co','78 Cité serpentard','Lille','MagicCo@hotmail.fr','10');
 
+
+INSERT INTO `Fournisseur`(`Nom_Fournisseur`, `Tel_Fournisseur`, `Mail_Fournisseur`)
+VALUES
+('pierre dubois', '0611349913', 'pdubois@hotmail.fr'),
+('jean ratae', '0633564897', 'jean.ratae@gmail.com'),
+('louis manart', '0613457865', 'louismanart@free.com'),
+('albert muisse', '0632659848', 'amuisse@gmail.fr'),
+('henri kaval', '0696857412', 'hikaval@hotmail.com'),
+('polo damido', '0636251458', 'polodam@orange.fr'),
+('lea brouha', '0632549815', 'leabrobro@hotmail.fr');
