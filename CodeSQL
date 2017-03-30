@@ -8,7 +8,7 @@ INSERT INTO `Progression` (`Statut_Progression`) VALUES
 -- Remplie  Commande --
 
 INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`ID_Progression`) VALUES
-('150','12 Octobre 2017','10','1'),
+('150','2017-10-12','10','1'),
 ('140','13 Octobre 2017','11','2'),
 ('130','14 Octobre 2017','12','3');
 
@@ -19,10 +19,15 @@ INSERT INTO `inventeur` (`Nom_Inventeur`, `Prenom_Inventeur`) VALUES
 
 -- Remplie Clients --
 
-INSERT INTO `clients` (`Nom_Client`, `Prenom_Client`, `Tel_Client`, `Civilite`, `Code_Postal`, `Ville_Client`, `Adresse_Client`, `Mail`, `ID_Commande` `ID_Inventeur`) VALUES
+INSERT INTO `clients` (`Nom_Client`, `Prenom_Client`, `Tel_Client`, `Civilite`, `Code_Postal`, `Ville_Client`, `Adresse_Client`, `Mail`, `ID_Commande`,`ID_Inventeur`) VALUES
 ('Fuche', 'Ysolda', 0654244798, 'F', 77333, 'Unilo', '47 avenue', 'ysolda.fuche@baguette.com', 3, NULL);
 
 --Remplie Societe --
 
 Insert INTO `societe` (`NoSiret`,`Nom_Societe`,`Adresse_Societe`,`Ville_Societe`,`Mail_Societe`,`ID_Commande`) VALUES
-('1254','Magic IT','224 résidance de poudlard','Genève','MagicIT@hotmail.fr','2');
+('1254','Magic IT','224 résidance de poudlard','Genève','MagicIT@hotmail.fr','2')
+('2451','Institution of  Magic','33 rue des trois cyclopes','Poitiers',	'IofM@hotmail.fr','4')
+('7845','Magic Island','68 cité des sorcières','Paris','MgcIsland@hotmail.fr','6')
+('5495','Sort company','45 rue des Malfoy','Marseille','SortCpy@hotmail.fr','8')
+('9865''Magic&Co','78 Cité serpentard','Lille','MagicCo@hotmail.fr','10');
+
