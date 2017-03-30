@@ -1,9 +1,28 @@
-INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`ID_Progression`) VALUES
-('150','12 Octobre 2017','10','1')
-('140','13 Octobre 2017','11','2')
-('130','14 Octobre 2017','12','3')
+-- Remplie Progresion --
 
+INSERT INTO `Progression` (`Statut_Progression`) VALUES
+('Non traitée'),
+('En cours'),
+('Terminée');
+
+-- Remplie  Commande --
+
+INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`ID_Progression`) VALUES
+('150','12 Octobre 2017','10','1'),
+('140','13 Octobre 2017','11','2'),
+('130','14 Octobre 2017','12','3');
+
+-- Remplie Inventeur --
+
+INSERT INTO `inventeur` (`Nom_Inventeur`, `Prenom_Inventeur`) VALUES
+('Dumbledore', 'Albus');
+
+-- Remplie Clients --
+
+INSERT INTO `clients` (`Nom_Client`, `Prenom_Client`, `Tel_Client`, `Civilite`, `Code_Postal`, `Ville_Client`, `Adresse_Client`, `Mail`, `ID_Inventeur`) VALUES
+('Fuche', 'Ysolda', 0654244798, 'F', 77333, 'Unilo', '47 avenue de la longue vue', 'ysolda.fuche@baguette.com', '9');
+
+--Remplie Societe --
 
 Insert INTO `societe` (`NoSiret`,`Nom_Societe`,`Adresse_Societe`,`Ville_Societe`,`Mail_Societe`,`ID_Commande`) VALUES
 ('1254','Magic IT','224 résidance de poudlard','Genève','MagicIT@hotmail.fr','2');
-
