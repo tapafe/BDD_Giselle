@@ -1,0 +1,11 @@
+INSERT INTO `Contient_Recipient_Potion`(`Quantite_Recipient`,`ID_commande`,`ID_Recipient_en_Stock`,`Stock_Potion`) VALUES
+(`200`,``,``,``),
+(`100`,``,``,``),
+(`100`,``,``,``),
+(`100`,``,``,``),
+(`200`,``,``,``),
+(`200`,``,``,``),
+(`200`,``,``,``),
+(`100`,``,``,``),
+(`100`,``,``,``),
+(`100`,``,``,``);
