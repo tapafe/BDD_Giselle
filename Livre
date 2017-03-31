@@ -1,4 +1,4 @@
-INSERT INTO 'Livre' (`ID_Ingredient`,`ID_Fournisseur`) VALUES
+INSERT INTO 'Fournit_Ingredient' (`ID_Ingredient`,`ID_Fournisseur`) VALUES
 ('2','1'),
 ('1','2'),
 ('3','3'),
