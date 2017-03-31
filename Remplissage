@@ -1,0 +1,197 @@
+
+
+-- Remplie Progression --
+
+INSERT INTO `Progression` (`Statut_Progression`) VALUES
+('Non traitée'),
+('En cours'),
+('Terminée');
+
+-- Remplie  Commande --
+
+INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`ID_Progression`) VALUES
+('1500','2017-10-12','1','1'),
+('1400','2017-10-14','2','2'),
+('1300','2017-10-14','3','3'),
+('1700','2017-10-14','4','3'),
+('1800','2017-10-14','5','2'),
+('1900','2017-10-14','6','1'),
+('2400','2017-10-14','7','2'),
+('2500','2017-10-14','8','3'),
+('1400','2017-10-14','9','2'),
+('3300','2017-10-13','10','1');
+
+-- Remplie Inventeur --
+
+INSERT INTO `inventeur` (`Nom_Inventeur`, `Prenom_Inventeur`) VALUES
+('Alu', 'Card'),
+('Arn', 'Hide'),
+('Doctor', 'Starnge'),
+('Era', 'Gon'),
+('Natsu', 'Dragnir'),
+('Fee', 'Morganne'),
+('Jaf', 'Har'),
+('Kart', 'Hus'),
+('Zel', 'Da'),
+('Dumbledore', 'Albus');
+
+
+-- Remplie Clients --
+
+INSERT INTO `clients` (`Nom_Client`, `Prenom_Client`, `Tel_Client`, `Civilite`, `Code_Postal`, `Ville_Client`, `Adresse_Client`, `Mail`) VALUES
+('Fuche', 'Ysolda', 0654244798, 'F', 77333, 'Unilo', '47 avenue de la longue vue', 'ysolda.fuche@baguette.com'),
+('Trucmuche', 'Francis', 650463874, 'M', 11555,	'Hululo', '78 rue de la baguette', 'francis.trucmuche@magie.fr'),
+('Grogo', 'Hercules', 674356879, 'M', 88999, 'Lunatirit', '14 impasse passe-partout', 'grogo.hercules@yggdrasil.com'),
+('Hyperrion', 'Ethiene', 789665324, 'M', 22000,	'MagieCentre', '98 rue rien', 'ehiene.hyperrion@magie.com'),
+('Jurico', 'Mathis',	585857468, 'M', 99555, 'Flobu',	'27 rue anniversaire', 'mathis.jurico@magie.com');
+
+
+
+-- Remplie Diluant --
+
+INSERT INTO `Diluant` (`Nom_Diluant`) VALUES
+('Eau'),
+('Vin'),
+('Lait'),
+('Sang'),
+('Cola');
+
+
+-- Remplie Ingrédient --
+
+INSERT INTO `Ingredient`(`Nom_Ingredient`, `Prix_Ingredient`, `Temps_Conservation`, `Seuil_Fraicheur`) VALUES
+('racines de marguerite', '9', '32', '20'),
+('chenilles', '5', '19', '10'),
+('orties sechees', '4', '45', '35'),
+('crochets de serpent', '12', '50', '40'),
+('epines de poro', '3', '40', '32'),
+('foie de rat', '8', '10', '6'),
+('poudre de pierre de la lune', '18', '150', '130'),
+('sirop d ellebore', '15', '50', '38'),
+('aile d aigle', '20', '62','50'),
+('plume de phenix', '15', '48', '40'),
+('oeuf de dragon ', '100', '80', '70'),
+('ecaille de dragon', '23', '60', '52'),
+('racines de valeriane', '8', '46', '40'),
+('feuille soporifique', '5', '20', '15'),
+('armoise', '23', '35', '28'),
+('scarabees', '40', '25', '20'),
+('racines de gingembre', '18', '37', '29'),
+('bile de tatou', '18', '36', '30'),
+('baies de gui', '13', '40', '28'),
+('brins de valeriane', '12', '34', '28'),
+('coùrne de dragon', '120', '90', '70');
+
+
+INSERT INTO `Fournisseur`(`Nom_Fournisseur`, `Tel_Fournisseur`, `Mail_Fournisseur`)
+VALUES
+('pierre dubois', '0611349913', 'pdubois@hotmail.fr'),
+('jean ratae', '0633564897', 'jean.ratae@gmail.com'),
+('louis manart', '0613457865', 'louismanart@free.com'),
+('albert muisse', '0632659848', 'amuisse@gmail.fr'),
+('henri kaval', '0696857412', 'hikaval@hotmail.com'),
+('polo damido', '0636251458', 'polodam@orange.fr'),
+('lea brouha', '0632549815', 'leabrobro@hotmail.fr');
+
+
+
+INSERT INTO `Recipient` (`Nom_Recipient`, `Contenance_Recipient`, `Prix_Recipient`) VALUES
+('Fiole', '2', '5'),
+('Erlenmeyer ','3', '10'),
+('Pot', '4', '15'),
+('Marmite', '10', '20'),
+('Tube', '1', '2');
+
+
+INSERT INTO `Onguent` (`Nom_Onguent`, `Prix_Onguent`, `Id_Recipient`) VALUES
+('Poudre de ratatinage', 150, 1),
+('Creme furoncles', 150, 2),
+('Gaz de paix', 150, 2),
+('Gaz pour voler', 150, 3),
+('Poudre de Souffle', 150, 4),
+('Creme morte', 150, 5),
+('Poudre de confusion', 150, 1),
+('Creme de ganda', 150, 2),
+('Feuille morte', 150, 3);
+
+
+INSERT INTO `Ingredient_en_stock` (`Date_Entrer`,`Arrive_Depuis`,`ID_Ingredient`, `Quantite_Ingredient`,`ID_Fournisseur`)
+VALUES
+('2017-03-29', '1', '1','11', 1 ),
+('2017-03-29', '1', '2','22', 2 ),
+('2017-03-29', '1', '3','33', 3),
+('2017-03-29', '1', '4','44', 4 ),
+('2017-03-29', '1', '5','52', 5 ),
+('2017-03-29', '1', '6','15', 6 ),
+('2017-03-29', '1', '7','20', 7),
+('2017-03-29', '1', '8','30', 6 ),
+('2017-03-29', '1', '9','27', 5 ),
+('2017-03-29', '1', '10','14', 4 ),
+('2017-03-29', '1', '11','11', 3 ),
+('2017-03-29', '1', '12','15', 2 ),
+('2017-03-29', '1', '13','13', 1 ),
+('2017-03-29', '1', '14','14', 1 ),
+('2017-03-29', '1', '15','15', 2 ),
+('2017-03-29', '1', '16','16', 3 ),
+('2017-03-29', '1', '17','18', 4 ),
+('2017-03-29', '1', '18','25', 5 ),
+('2017-03-29', '1', '19','35', 5),
+('2017-03-29', '1', '20','5', 6 ),
+('2017-03-29', '1', '21','1', 7 ),
+
+-- Remplie Potion --
+
+INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `ID_Diluant`, `Id_Recipient`, `ID_Inventeur`) VALUES
+('Potion de ratatinage', 350, 40, 4, 1, 1),
+('Potion furoncles', 200, 45, 2, 1, 2),
+('Filtre de paix', 450, 35, 3, 2, 3),
+('Potion de vol', 300, 50, 1, 3, 4),
+('Souffle du dragon', 700, 55, 5, 4, 5),
+('Filtre de mort vivante', 400, 20, 4, 4, 6),
+('Potion de confusion', 500, 60, 2, 5, 7),
+('Potion de ganda', 8500, 15, 3, 1, 8),
+('Amortentia', 300, 25, 1, 1, 9);
+
+
+INSERT INTO `Potion_en_stock` (`Date_Entrer`,`Arrive_Depuis`,`Quantite_par_date`,`ID_Ingredient`)
+
+
+INSERT INTO `Onguent_en_stock` (`Date_Entrer`,`Arrive_Depuis`,`Quantite_par_date`,`ID_Ingredient`)
+
+
+INSERT INTO `Recipient_en_stock` (`Date_Entrer`,`Arrive_Depuis`,`Quantite_par_date`,`ID_Ingredient`)
+
+
+
+
+INSERT INTO `Diluant_en_stock` (`Quantite_Diluant`, `ID_Fournisseur`, `ID_Diluant`) VALUES
+(10, 1, 5),
+(20, 2, 4),
+(5, 3, 3),
+(15, 4, 2),
+(25, 5, 1);
+
+
+INSERT INTO `Donne_Diluant` (`ID_Diluant`, `ID_Fournisseur`) VALUES
+(1, 1),
+(1, 2),
+(2, 2),
+(1, 3),
+(2, 3),
+(3, 3),
+(1, 4),
+(2, 4),
+(3, 4),
+(1, 5),
+(2, 5),
+(3, 5),
+(4, 5),
+(1, 6),
+(2, 6),
+(3, 6),
+(4, 6),
+(1, 7),
+(2, 7),
+(3, 7),
+(4, 7),
+(5, 7);
