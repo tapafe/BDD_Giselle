@@ -210,6 +210,7 @@ CREATE TABLE Livre(
 #------------------------------------------------------------
 
 CREATE TABLE Contient_potion(
+        Quantite    Int NOT NULL ,
         ID_Potion   Int NOT NULL ,
         ID_commande Int NOT NULL ,
         PRIMARY KEY (ID_Potion ,ID_commande )
@@ -221,6 +222,7 @@ CREATE TABLE Contient_potion(
 #------------------------------------------------------------
 
 CREATE TABLE Contient_Ingredient(
+        Quantite      Int NOT NULL ,
         ID_commande   Int NOT NULL ,
         ID_Ingredient Int NOT NULL ,
         PRIMARY KEY (ID_commande ,ID_Ingredient )
@@ -232,6 +234,7 @@ CREATE TABLE Contient_Ingredient(
 #------------------------------------------------------------
 
 CREATE TABLE Contient_Onguent(
+        Quantite    Int NOT NULL ,
         ID_Onguent  Int NOT NULL ,
         ID_commande Int NOT NULL ,
         PRIMARY KEY (ID_Onguent ,ID_commande )
