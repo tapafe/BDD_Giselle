@@ -195,3 +195,37 @@ INSERT INTO `Donne_Diluant` (`ID_Diluant`, `ID_Fournisseur`) VALUES
 (3, 7),
 (4, 7),
 (5, 7);
+
+INSERT INTO `Onguant_en_stock` (`Quantite_Onguent`,`ID_Onguent`) VALUES
+(10,1),
+(15,2),
+(10,3),
+(15,4),
+(10,5),
+(15,6),
+(20,7),
+(25,8),
+(30,9);
+
+INSERT INTO `Donne_ingredient` (`ID_Ingredient`,`ID_Fournisseur`) VALUES
+(1,7),
+(2,6),
+(3,5),
+(4,4),
+(5,3),
+(6,2),
+(7,1),
+(8,7),
+(9,6),
+(10,5),
+(11,4),
+(12,3),
+(13,2),
+(14,1),
+(15,7),
+(16,6),
+(17,5),
+(18,4),
+(19,3),
+(20,2),
+(21,1),
