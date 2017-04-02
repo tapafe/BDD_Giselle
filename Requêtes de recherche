@@ -1,4 +1,21 @@
 
+Requête N°1
+
+SELECT Potion.Nom_potion,Ingredient.Nom_Ingredient
+FROM ((Potion INNER JOIN se_compose ON Se_compose.ID_Potion = Potion.ID_Potion)
+INNER JOIN Ingredient ON Ingredient.ID_Ingredient=se_compose.ID_Ingredient)
+WHERE Ingredient.Nom_Ingredient='chenilles'
+
+UNION
+
+SELECT Onguent.Nom_Onguent, Ingredient.Nom_Ingredient
+FROM (( Onguent INNER JOIN est_compose ON Onguent.ID_Onguent = est_compose.ID_Onguent)
+INNER JOIN Ingredient ON est_compose.ID_Ingredient = Ingredient.ID_Ingredient)
+WHERE Ingredient.Nom_Ingredient='chenilles';
+
+
+
+
 
 Requête N°2
 
@@ -11,6 +28,8 @@ Where Se_compose.ID_Ingredient IN (
 SELECT ID_Ingredient
 FROM est_compose )
 GROUP BY Ingredient.Nom_Ingredient;
+
+
 
 
 
