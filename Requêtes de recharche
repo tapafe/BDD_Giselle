@@ -1,0 +1,13 @@
+
+
+Requête N°2
+
+SELECT Potion.Nom_Potion, Onguent.Nom_Onguent, Ingredient.Nom_Ingredient
+FROM ((((Potion INNER JOIN Se_compose ON Potion.ID_Potion = Se_compose.ID_Potion)
+INNER JOIN Ingredient ON Se_compose.ID_Ingredient =Ingredient.ID_Ingredient)
+INNER JOIN est_compose ON Ingredient.ID_Ingredient = est_compose.ID_Ingredient)
+INNER JOIN Onguent ON est_compose.ID_Onguent = Onguent.ID_Onguent)
+Where Se_compose.ID_Ingredient IN (
+SELECT ID_Ingredient
+FROM est_compose )
+GROUP BY Ingredient.Nom_Ingredient;
