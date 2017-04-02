@@ -32,7 +32,7 @@ INSERT INTO `Ingredient`(`Nom_Ingredient`, `Prix_Ingredient`, `Temps_Conservatio
 ('crochets de serpent', '12', '50', '40'),
 ('epines de poro', '3', '40', '32'),
 ('foie de rat', '8', '10', '6'),
-('poudre de pierre de la lune', '18', '150', '130'),
+('poudre de pierre', '18', '150', '130'),
 ('sirop d ellebore', '15', '50', '38'),
 ('aile d aigle', '20', '62','50'),
 ('plume de phenix', '15', '48', '40'),
