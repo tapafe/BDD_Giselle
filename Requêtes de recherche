@@ -8,15 +8,6 @@ INNER JOIN est_compose ON Ingredient.ID_Ingredient = est_compose.ID_Ingredient)
 INNER JOIN Onguent ON est_compose.ID_Onguent = Onguent.ID_Onguent)
 Where Ingredient.Nom_Ingredient = 'chenilles';
 
-UNION
-
-SELECT Onguent.Nom_Onguent, Ingredient.Nom_Ingredient
-FROM (( Onguent INNER JOIN est_compose ON Onguent.ID_Onguent = est_compose.ID_Onguent)
-INNER JOIN Ingredient ON est_compose.ID_Ingredient = Ingredient.ID_Ingredient)
-WHERE Ingredient.Nom_Ingredient='chenilles';
-
-
-
 
 
 Requête N°2
