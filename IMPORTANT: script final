@@ -14,9 +14,9 @@ CREATE TABLE Client(
         Tel_Client     Int NOT NULL ,
         Civilite       Varchar (25) NOT NULL ,
         Code_Postal    Int NOT NULL ,
-        Ville_Client   Varchar (25) NOT NULL ,
-        Adresse_client Varchar (25) NOT NULL ,
-        Mail           Varchar (25) NOT NULL ,
+        Ville_Client   Varchar (255) NOT NULL ,
+        Adresse_client Varchar (255) NOT NULL ,
+        Mail           Varchar (255) NOT NULL ,
         ID_Personne    Int NOT NULL ,
         PRIMARY KEY (ID_Client ,ID_Personne )
 )ENGINE=InnoDB;
@@ -84,7 +84,7 @@ CREATE TABLE Fournisseur(
         ID_Fournisseur   int (11) Auto_increment  NOT NULL ,
         Nom_Fournisseur  Varchar (25) NOT NULL ,
         Tel_Fournisseur  Int ,
-        Mail_Fournisseur Varchar (50) ,
+        Mail_Fournisseur Varchar (255) ,
         PRIMARY KEY (ID_Fournisseur )
 )ENGINE=InnoDB;
 
