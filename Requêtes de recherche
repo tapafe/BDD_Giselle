@@ -11,3 +11,14 @@ Where Se_compose.ID_Ingredient IN (
 SELECT ID_Ingredient
 FROM est_compose )
 GROUP BY Ingredient.Nom_Ingredient;
+
+
+
+Requette N°5
+
+SELECT Potion.Nom_Potion, Potion.Prix_Potion, 
+SUM((Ingredient.Prix_Ingredient * Se_compose.Quantite_Ingredient) + Diluant.Prix_Diluant) AS Prix_ingredient_et_diluant
+FROM (((Diluant INNER JOIN Potion ON Diluant.ID_Diluant = Potion.ID_Diluant)
+INNER JOIN Se_compose ON Potion.ID_Potion = Se_compose.ID_Potion)
+INNER JOIN Ingredient ON Se_compose.ID_Ingredient =Ingredient.ID_Ingredient)
+GROUP BY Potion.Nom_Potion;
