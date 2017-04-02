@@ -122,6 +122,7 @@ CREATE TABLE Onguent(
 CREATE TABLE Diluant(
         ID_Diluant  int (11) Auto_increment  NOT NULL ,
         Nom_Diluant Varchar (25) NOT NULL ,
+        Prix_Diluant DECIMAL (15,3)  NOT NULL ,
         PRIMARY KEY (ID_Diluant )
 )ENGINE=InnoDB;
 
@@ -355,12 +356,12 @@ INSERT INTO `Progression` (`Statut_Progression`) VALUES
 
 -- Remplie Diluant --
 
-INSERT INTO `Diluant` (`Nom_Diluant`) VALUES
-('Eau'),
-('Vin'),
-('Lait'),
-('Sang'),
-('Cola');
+INSERT INTO `Diluant` (`Nom_Diluant`, `Prix_Diluant`) VALUES
+('Eau', '5'),
+('Vin', '15'),
+('Lait', '8'),
+('Sang', '18'),
+('Cola', '9');
 
 INSERT INTO `Fournisseur`(`Nom_Fournisseur`, `Tel_Fournisseur`, `Mail_Fournisseur`) VALUES
 ('pierre dubois', '0611349913', 'pdubois@hotmail.fr'),
