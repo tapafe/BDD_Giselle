@@ -35,8 +35,7 @@ Requete N°4
 
 SELECT Potion.Nom_Potion, Potion.Temperature
 FROM Potion
-WHERE Potion.Temperature =40
-GROUP BY Potion.Nom_Potion, Potion.Temperature;
+ORDER BY Potion.Temperature;
 
 
 
