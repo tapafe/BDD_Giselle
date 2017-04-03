@@ -27,7 +27,7 @@ Requête N°3
 
 SELECT Diluant.Nom_Diluant, Potion.Nom_Potion
 FROM (Diluant INNER JOIN Potion ON Potion.ID_Diluant = Diluant.ID_Diluant)
-WHERE Diluant.Nom_Diluant= "eau";
+ORDER BY Diluant.Nom_Diluant;
 
 
 
