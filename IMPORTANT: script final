@@ -9,10 +9,10 @@
 
 CREATE TABLE Client(
         ID_Client      int (11) Auto_increment  NOT NULL ,
-        Nom_Client     Varchar (25) NOT NULL ,
-        Prenom_Client  Varchar (25) NOT NULL ,
+        Nom_Client     Varchar (255) NOT NULL ,
+        Prenom_Client  Varchar (255) NOT NULL ,
         Tel_Client     Int NOT NULL ,
-        Civilite       Varchar (25) NOT NULL ,
+        Civilite       Varchar (255) NOT NULL ,
         Code_Postal    Int NOT NULL ,
         Ville_Client   Varchar (255) NOT NULL ,
         Adresse_client Varchar (255) NOT NULL ,
@@ -28,7 +28,7 @@ CREATE TABLE Client(
 
 CREATE TABLE Ingredient(
         ID_Ingredient      int (11) Auto_increment  NOT NULL ,
-        Nom_Ingredient     Varchar (25) NOT NULL ,
+        Nom_Ingredient     Varchar (255) NOT NULL ,
         Prix_Ingredient    DECIMAL (15,3)  NOT NULL ,
         Temps_Conservation Numeric NOT NULL ,
         Seuil_Fraicheur    Int ,
@@ -42,8 +42,8 @@ CREATE TABLE Ingredient(
 
 CREATE TABLE Inventeur(
         ID_Inventeur     int (11) Auto_increment  NOT NULL ,
-        Nom_Inventeur    Varchar (25) NOT NULL ,
-        Prenom_inventeur Varchar (25) NOT NULL ,
+        Nom_Inventeur    Varchar (255) NOT NULL ,
+        Prenom_inventeur Varchar (255) NOT NULL ,
         ID_Personne      Int NOT NULL ,
         PRIMARY KEY (ID_Inventeur ,ID_Personne )
 )ENGINE=InnoDB;
@@ -71,7 +71,7 @@ CREATE TABLE Commande(
 
 CREATE TABLE Progression(
         ID_Progression     int (11) Auto_increment  NOT NULL ,
-        Statut_Progression Varchar (25) NOT NULL ,
+        Statut_Progression Varchar (255) NOT NULL ,
         PRIMARY KEY (ID_Progression )
 )ENGINE=InnoDB;
 
@@ -82,7 +82,7 @@ CREATE TABLE Progression(
 
 CREATE TABLE Fournisseur(
         ID_Fournisseur   int (11) Auto_increment  NOT NULL ,
-        Nom_Fournisseur  Varchar (25) NOT NULL ,
+        Nom_Fournisseur  Varchar (255) NOT NULL ,
         Tel_Fournisseur  Int ,
         Mail_Fournisseur Varchar (255) ,
         PRIMARY KEY (ID_Fournisseur )
@@ -98,7 +98,6 @@ CREATE TABLE Recipient(
         Nom_Recipient        Text NOT NULL ,
         Contenance_Recipient Int NOT NULL ,
         Prix_Recipient       DECIMAL (15,3)  NOT NULL ,
-        ID_Potion            Int NOT NULL ,
         PRIMARY KEY (ID_Recipient )
 )ENGINE=InnoDB;
 
@@ -109,7 +108,7 @@ CREATE TABLE Recipient(
 
 CREATE TABLE Onguent(
         ID_Onguent   int (11) Auto_increment  NOT NULL ,
-        Nom_Onguent  Varchar (25) NOT NULL ,
+        Nom_Onguent  Varchar (255) NOT NULL ,
         Prix_Onguent DECIMAL (15,3)  NOT NULL ,
         PRIMARY KEY (ID_Onguent )
 )ENGINE=InnoDB;
@@ -120,9 +119,9 @@ CREATE TABLE Onguent(
 #------------------------------------------------------------
 
 CREATE TABLE Diluant(
-        ID_Diluant  int (11) Auto_increment  NOT NULL ,
-        Nom_Diluant Varchar (25) NOT NULL ,
-        Prix_Diluant DECIMAL (15,3)  NOT NULL ,
+        ID_Diluant   int (11) Auto_increment  NOT NULL ,
+        Nom_Diluant  Varchar (255) NOT NULL ,
+        Prix_Diluant Int ,
         PRIMARY KEY (ID_Diluant )
 )ENGINE=InnoDB;
 
@@ -133,10 +132,10 @@ CREATE TABLE Diluant(
 
 CREATE TABLE Potion(
         ID_Potion      int (11) Auto_increment  NOT NULL ,
-        Nom_Potion     Varchar (25) NOT NULL ,
+        Nom_Potion     Varchar (255) NOT NULL ,
         Prix_Potion    DECIMAL (15,3)  ,
         Temperature    Int NOT NULL ,
-        Valider_Potion Bool NOT NULL ,
+        Valider_Potion Varchar (255) NOT NULL ,
         ID_Diluant     Int ,
         ID_Personne    Int NOT NULL ,
         PRIMARY KEY (ID_Potion ) ,
@@ -215,8 +214,7 @@ CREATE TABLE Diluant_en_stock(
 #------------------------------------------------------------
 
 CREATE TABLE Personne(
-        ID_Personne  int (11) Auto_increment  NOT NULL ,
-        Nom_Personne Varchar (255) NOT NULL ,
+        ID_Personne int (11) Auto_increment  NOT NULL ,
         PRIMARY KEY (ID_Personne )
 )ENGINE=InnoDB;
 
@@ -261,6 +259,7 @@ CREATE TABLE Donne_Ingredient(
 #------------------------------------------------------------
 
 CREATE TABLE Contient_Ingredient(
+        Quantite               Int ,
         ID_commande            Int NOT NULL ,
         ID_Ingredient_en_stock Int NOT NULL ,
         PRIMARY KEY (ID_commande ,ID_Ingredient_en_stock )
@@ -272,6 +271,7 @@ CREATE TABLE Contient_Ingredient(
 #------------------------------------------------------------
 
 CREATE TABLE Contient_Onguent(
+        Quantite            Int ,
         ID_commande         Int NOT NULL ,
         ID_Onguent_en_stock Int NOT NULL ,
         PRIMARY KEY (ID_commande ,ID_Onguent_en_stock )
@@ -317,7 +317,6 @@ ALTER TABLE Inventeur ADD CONSTRAINT FK_Inventeur_ID_Personne FOREIGN KEY (ID_Pe
 ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Progression FOREIGN KEY (ID_Progression) REFERENCES Progression(ID_Progression);
 ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Client FOREIGN KEY (ID_Client) REFERENCES Client(ID_Client);
 ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Personne FOREIGN KEY (ID_Personne) REFERENCES Personne(ID_Personne);
-ALTER TABLE Recipient ADD CONSTRAINT FK_Recipient_ID_Potion FOREIGN KEY (ID_Potion) REFERENCES Potion(ID_Potion);
 ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Diluant FOREIGN KEY (ID_Diluant) REFERENCES Diluant(ID_Diluant);
 ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Personne FOREIGN KEY (ID_Personne) REFERENCES Personne(ID_Personne);
 ALTER TABLE Ingredient_en_stock ADD CONSTRAINT FK_Ingredient_en_stock_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
