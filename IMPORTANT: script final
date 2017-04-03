@@ -556,13 +556,12 @@ INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `Valider_Potio
 
 
 
-INSERT INTO `Recipient` (`Nom_Recipient`, `Contenance_Recipient`, `Prix_Recipient`, `ID_Potion`) VALUES
-('Fiole', '2', '5', 1),
-('Erlenmeyer ','3', '10', 1),
-('Pot', '4', '15', 2),
-('Marmite', '10', '20', 3),
-('Tube', '1', '2', 1);
-
+INSERT INTO `Recipient` (`Nom_Recipient`, `Contenance_Recipient`, `Prix_Recipient`) VALUES
+('Fiole', '2', '5'),
+('Erlenmeyer ','3', '10'),
+('Pot', '4', '15'),
+('Marmite', '10', '20'),
+('Tube', '1', '2');
 
 INSERT INTO `Diluant_en_stock` (`Quantite_Diluant`, `ID_Fournisseur`, `ID_Diluant`) VALUES
 (10, 1, 5),
