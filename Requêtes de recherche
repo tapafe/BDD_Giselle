@@ -51,5 +51,4 @@ SUM((Ingredient.Prix_Ingredient * Se_compose.Quantite_Ingredient) + Diluant.Prix
 FROM (((Diluant INNER JOIN Potion ON Diluant.ID_Diluant = Potion.ID_Diluant)
 INNER JOIN Se_compose ON Potion.ID_Potion = Se_compose.ID_Potion)
 INNER JOIN Ingredient ON Se_compose.ID_Ingredient =Ingredient.ID_Ingredient)
-WHERE Valide_Potion = 'Valide'
 GROUP BY Potion.Nom_Potion;
