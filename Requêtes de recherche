@@ -23,14 +23,22 @@ FROM est_compose )
 GROUP BY Ingredient.Nom_Ingredient;
 
 
+Requête N°3
+
+SELECT Diluant.Nom_Diluant, Potion.Nom_Diluant
+FROM (Diluant INNER JOIN Potion ON Potion.ID_Diluant = Diluant.ID_Diluant)
+WHERE Diluant.Nom_Diluant= "eau";
+
+
+
+Requete N°4
+
 SELECT Potion.Nom_Potion, Potion.Temperature
 FROM Potion
 WHERE Potion.Temperature =40
 GROUP BY Potion.Nom_Potion, Potion.Temperature;
 
-SELECT Diluant.Nom_Diluant, Potion.Nom_Diluant
-FROM (Diluant INNER JOIN Potion ON Potion.ID_Diluant = Diluant.ID_Diluant)
-WHERE Diluant.Nom_Diluant=Diluant;
+
 
 
 Requette N°5
