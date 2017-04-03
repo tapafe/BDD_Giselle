@@ -1,0 +1,91 @@
+DELIMITER |
+ CREATE PROCEDURE AjoutRecette (IN Nom_Potion VARCHAR(255), Ingredient1 VARCHAR(255) , Ingredient2 VARCHAR(255), Ingredient3 VARCHAR(255), 
+ Ingredient4 VARCHAR(255), Ingredient5 VARCHAR(255), Prix_potion INT(255), Nom_Diluant VARCHAR(255), Temperature INT(255))
+ BEGIN 
+
+
+ INSERT INTO Potion (`Nom_Potion`,`Prix_potion`,`Temperature`) VALUES
+ ('Nom_Potion', 'Prix_potion', 'Temperature');
+
+
+ UPDATE Potion SET 
+ ID_Diluant = (SELECT ID_Diluant
+ 	FROM Diluant
+ 	WHERE Nom_Diluant = Nom_Diluant*)
+ where ID_Potion = MAX(ID_Potion);
+
+
+INSERT INTO Se_compose (ID_Potion,ID_Ingredient)
+SELECT ID_Potion, '1'
+FROM Potion 
+Where ID_Potion = MAX(ID_Potion);
+
+ UPDATE Se_compose SET 
+ ID_Ingredient = (SELECT ID_Ingredient
+ 	FROM Ingredient
+ 	WHERE Nom_Ingredient = Ingredient1*)
+ where  ID_Potion = MAX(ID_Potion);
+
+
+
+
+
+ INSERT INTO Se_compose (ID_Potion,ID_Ingredient)
+SELECT ID_Potion, '1'
+FROM Potion 
+Where ID_Potion = MAX(ID_Potion);
+
+ UPDATE Se_compose SET 
+ ID_Ingredient = (SELECT ID_Ingredient
+ 	FROM Ingredient
+ 	WHERE Nom_Ingredient = Ingredient2*)
+ where  ID_Potion = MAX(ID_Potion);
+
+
+
+ INSERT INTO Se_compose (ID_Potion,ID_Ingredient)
+SELECT ID_Potion, '1'
+FROM Potion 
+Where ID_Potion = MAX(ID_Potion);
+
+ UPDATE Se_compose SET 
+ ID_Ingredient = (SELECT ID_Ingredient
+ 	FROM Ingredient
+ 	WHERE Nom_Ingredient = Ingredient3*)
+ where  ID_Potion = MAX(ID_Potion);
+
+
+
+
+ INSERT INTO Se_compose (ID_Potion,ID_Ingredient)
+SELECT ID_Potion, '1'
+FROM Potion 
+Where ID_Potion = MAX(ID_Potion);
+
+ UPDATE Se_compose SET 
+ ID_Ingredient = (SELECT ID_Ingredient
+ 	FROM Ingredient
+ 	WHERE Nom_Ingredient = Ingredient4*)
+ where  ID_Potion = MAX(ID_Potion);
+
+
+
+ INSERT INTO Se_compose (ID_Potion,ID_Ingredient)
+SELECT ID_Potion, '1'
+FROM Potion 
+Where ID_Potion = MAX(ID_Potion);
+
+ UPDATE Se_compose SET 
+ ID_Ingredient = (SELECT ID_Ingredient
+ 	FROM Ingredient
+ 	WHERE Nom_Ingredient = Ingredient5*)
+ where  ID_Potion = MAX(ID_Potion);
+
+
+
+ DELETE FROM `Se_compose`
+ WHERE ID_Ingredient = NULL;
+ 
+
+ END |
+ DELIMITER ;
