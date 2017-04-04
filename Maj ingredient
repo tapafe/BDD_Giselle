@@ -1,9 +1,0 @@
-CREATE PROCEDURE MAJ_Ingredient (In Nom_Ing VARCHAR (255), Qt_Ing INT (255)) 
-BEGIN 
-UPDATE ingredient_en_stock 
-SET Quantite_Ingredient= (Quantite_Ingredient + Qt_Ing) 
-WHERE Id_Ingredient_en_stock = Qt_Ing; 
-SELECT ingredient.Nom_Ingredient, ingredient_en_stock.ID_Ingredient_en_stock, ingredient.ID_Ingredient 
-FROM ingredient,ingredient_en_stock 
-WHERE Nom_Ingredient='Nom_Ing'; 
-END 
