@@ -1,73 +1,721 @@
-DELIMITER |
-CREATE PROCEDURE Consultation_Commande(IN p_nom VARCHAR(255))
-BEGIN
-SELECT DISTINCT Commande.ID_Commande, Client.Prenom_Client, Client.Nom_Client, Client.Adresse_Client, Client.Ville_Client, Client.Code_Postal, Commande.Prix_Commande_Total, Commande.Date_De_Commande
-FROM Client INNER JOIN Commande ON Commande.ID_Personne = Client.ID_Personne
-INNER JOIN Personne ON Client.ID_Personne = Personne.ID_Personne
-WHERE Personne.Nom_Personne = p_nom ;
-END |
-DELIMITER ;
-CALL Consultation_Commande('Fuche'); -- Pas oublier ''
+CREATE DATABASE projet_bdd;
+USE projet_bdd;
 
--------------------------------------
+#------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
 
-DELIMITER |
-CREATE PROCEDURE Supression_Ingredient()
-BEGIN
-UPDATE Ingredient_en_stock
-SET Arrive_Depuis = DATEDIFF(CURDATE(), Ingredient_en_stock.Date_Entrer);
 
-DELETE s
-FROM Ingredient i
-INNER JOIN Ingredient_en_stock s ON i.ID_Ingredient = s.ID_Ingredient
-WHERE i.Temps_Conservation <= s.Arrive_Depuis;
-END |
-DELIMITER ;
+#------------------------------------------------------------
+# Table: Client
+#------------------------------------------------------------
 
------------------------------------
+CREATE TABLE Client(
+        ID_Client      int (11) Auto_increment  NOT NULL ,
+        Nom_Client     Varchar (255) NOT NULL ,
+        Prenom_Client  Varchar (255) NOT NULL ,
+        Tel_Client     Int NOT NULL ,
+        Civilite       Varchar (255) NOT NULL ,
+        Code_Postal    Int NOT NULL ,
+        Ville_Client   Varchar (255) NOT NULL ,
+        Adresse_client Varchar (255) NOT NULL ,
+        Mail           Varchar (255) NOT NULL ,
+        ID_Personne    Int NOT NULL ,
+        PRIMARY KEY (ID_Client ,ID_Personne )
+)ENGINE=InnoDB;
 
-DELIMITER |
-CREATE PROCEDURE Ajout_Ingredient(ingre INT, nbr INT, fourni INT, voiringre CHAR)
-BEGIN
+
+#------------------------------------------------------------
+# Table: Ingredient
+#------------------------------------------------------------
+
+CREATE TABLE Ingredient(
+        ID_Ingredient      int (11) Auto_increment  NOT NULL ,
+        Nom_Ingredient     Varchar (255) NOT NULL ,
+        Prix_Ingredient    DECIMAL (15,3)  NOT NULL ,
+        Temps_Conservation Numeric NOT NULL ,
+        Seuil_Fraicheur    Int ,
+        PRIMARY KEY (ID_Ingredient )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Inventeur
+#------------------------------------------------------------
+
+CREATE TABLE Inventeur(
+        ID_Inventeur     int (11) Auto_increment  NOT NULL ,
+        Nom_Inventeur    Varchar (255) NOT NULL ,
+        Prenom_inventeur Varchar (255) NOT NULL ,
+        ID_Personne      Int NOT NULL ,
+        PRIMARY KEY (ID_Inventeur ,ID_Personne )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Commande
+#------------------------------------------------------------
+
+CREATE TABLE Commande(
+        ID_commande         int (11) Auto_increment  NOT NULL ,
+        No_Commande         Int NOT NULL ,
+        Prix_Commande_Total DECIMAL (15,3)  NOT NULL ,
+        Date_De_Commande    Date NOT NULL ,
+        ID_Progression      Int ,
+        ID_Client           Int NOT NULL ,
+        ID_Personne         Int NOT NULL ,
+        PRIMARY KEY (ID_commande )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Progression
+#------------------------------------------------------------
+
+CREATE TABLE Progression(
+        ID_Progression     int (11) Auto_increment  NOT NULL ,
+        Statut_Progression Varchar (255) NOT NULL ,
+        PRIMARY KEY (ID_Progression )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Fournisseur
+#------------------------------------------------------------
+
+CREATE TABLE Fournisseur(
+        ID_Fournisseur   int (11) Auto_increment  NOT NULL ,
+        Nom_Fournisseur  Varchar (255) NOT NULL ,
+        Tel_Fournisseur  Int ,
+        Mail_Fournisseur Varchar (255) ,
+        PRIMARY KEY (ID_Fournisseur )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Recipient
+#------------------------------------------------------------
+
+CREATE TABLE Recipient(
+        ID_Recipient         int (11) Auto_increment  NOT NULL ,
+        Nom_Recipient        Text NOT NULL ,
+        Contenance_Recipient Int NOT NULL ,
+        Prix_Recipient       DECIMAL (15,3)  NOT NULL ,
+        PRIMARY KEY (ID_Recipient )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Onguent
+#------------------------------------------------------------
+
+CREATE TABLE Onguent(
+        ID_Onguent   int (11) Auto_increment  NOT NULL ,
+        Nom_Onguent  Varchar (255) NOT NULL ,
+        Prix_Onguent DECIMAL (15,3)  NOT NULL ,
+        PRIMARY KEY (ID_Onguent )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Diluant
+#------------------------------------------------------------
+
+CREATE TABLE Diluant(
+        ID_Diluant   int (11) Auto_increment  NOT NULL ,
+        Nom_Diluant  Varchar (255) NOT NULL ,
+        Prix_Diluant Int ,
+        PRIMARY KEY (ID_Diluant )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Potion
+#------------------------------------------------------------
+
+CREATE TABLE Potion(
+        ID_Potion      int (11) Auto_increment  NOT NULL ,
+        Nom_Potion     Varchar (255) NOT NULL ,
+        Prix_Potion    DECIMAL (15,3)  ,
+        Temperature    Int NOT NULL ,
+        Valider_Potion Varchar (255) NOT NULL ,
+        ID_Diluant     Int ,
+        ID_Personne    Int NOT NULL ,
+        PRIMARY KEY (ID_Potion ) ,
+        UNIQUE (Nom_Potion )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Ingredient_en_stock
+#------------------------------------------------------------
+
+CREATE TABLE Ingredient_en_stock(
+        ID_Ingredient_en_stock int (11) Auto_increment  NOT NULL ,
+        Date_Entrer            Date NOT NULL ,
+        Arrive_Depuis          Int NOT NULL ,
+        ID_Ingredient          Int NOT NULL ,
+        Quantite_Ingredient    Int NOT NULL ,
+        ID_Fournisseur         Int NOT NULL ,
+        PRIMARY KEY (ID_Ingredient_en_stock )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Recipient_en_stock
+#------------------------------------------------------------
+
+CREATE TABLE Recipient_en_stock(
+        ID_Recipient_en_stock int (11) Auto_increment  NOT NULL ,
+        Quantite_Recipient    Int NOT NULL ,
+        ID_Fournisseur        Int NOT NULL ,
+        ID_Recipient          Int NOT NULL ,
+        PRIMARY KEY (ID_Recipient_en_stock )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Stock_Potion
+#------------------------------------------------------------
+
+CREATE TABLE Stock_Potion(
+        ID_Stock_Potion int (11) Auto_increment  NOT NULL ,
+        Quantite_Potion Int ,
+        ID_Potion       Int NOT NULL ,
+        PRIMARY KEY (ID_Stock_Potion )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Onguent_en_stock
+#------------------------------------------------------------
+
+CREATE TABLE Onguent_en_stock(
+        ID_Onguent_en_stock int (11) Auto_increment  NOT NULL ,
+        ID_Onguent          Int ,
+        PRIMARY KEY (ID_Onguent_en_stock )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Diluant_en_stock
+#------------------------------------------------------------
+
+CREATE TABLE Diluant_en_stock(
+        ID_Diluant_en_stock int (11) Auto_increment  NOT NULL ,
+        Quantite_Diluant    Int ,
+        ID_Fournisseur      Int NOT NULL ,
+        ID_Diluant          Int ,
+        PRIMARY KEY (ID_Diluant_en_stock )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Personne
+#------------------------------------------------------------
+
+CREATE TABLE Personne(
+        ID_Personne  int (11) Auto_increment  NOT NULL ,
+        Nom_Personne Varchar (255) ,
+        PRIMARY KEY (ID_Personne )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Se compose
+#------------------------------------------------------------
+
+CREATE TABLE Se_compose(
+        Quantite_Ingredient Int NOT NULL ,
+        ID_Potion           Int NOT NULL ,
+        ID_Ingredient       Int NOT NULL ,
+        PRIMARY KEY (ID_Potion ,ID_Ingredient )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: est_compose
+#------------------------------------------------------------
+
+CREATE TABLE est_compose(
+        Quantite      Int NOT NULL ,
+        ID_Ingredient Int NOT NULL ,
+        ID_Onguent    Int NOT NULL ,
+        PRIMARY KEY (ID_Ingredient ,ID_Onguent )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Donne_Ingredient
+#------------------------------------------------------------
+
+CREATE TABLE Donne_Ingredient(
+        ID_Ingredient  Int NOT NULL ,
+        ID_Fournisseur Int NOT NULL ,
+        PRIMARY KEY (ID_Ingredient ,ID_Fournisseur )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Contient_Ingredient
+#------------------------------------------------------------
+
+CREATE TABLE Contient_Ingredient(
+        Quantite               Int ,
+        ID_commande            Int NOT NULL ,
+        ID_Ingredient_en_stock Int NOT NULL ,
+        PRIMARY KEY (ID_commande ,ID_Ingredient_en_stock )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Contient_Onguent
+#------------------------------------------------------------
+
+CREATE TABLE Contient_Onguent(
+        Quantite            Int ,
+        ID_commande         Int NOT NULL ,
+        ID_Onguent_en_stock Int NOT NULL ,
+        PRIMARY KEY (ID_commande ,ID_Onguent_en_stock )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Donne_Diluant
+#------------------------------------------------------------
+
+CREATE TABLE Donne_Diluant(
+        ID_Diluant     Int NOT NULL ,
+        ID_Fournisseur Int NOT NULL ,
+        PRIMARY KEY (ID_Diluant ,ID_Fournisseur )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Donne_Recipient
+#------------------------------------------------------------
+
+CREATE TABLE Donne_Recipient(
+        ID_Recipient   Int NOT NULL ,
+        ID_Fournisseur Int NOT NULL ,
+        PRIMARY KEY (ID_Recipient ,ID_Fournisseur )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Contient_Recipient_Potion
+#------------------------------------------------------------
+
+CREATE TABLE Contient_Recipient_Potion(
+        Quantite_Recipient    Int NOT NULL ,
+        ID_commande           Int NOT NULL ,
+        ID_Recipient_en_stock Int NOT NULL ,
+        ID_Stock_Potion       Int NOT NULL ,
+        PRIMARY KEY (ID_commande ,ID_Recipient_en_stock ,ID_Stock_Potion )
+)ENGINE=InnoDB;
+
+ALTER TABLE Client ADD CONSTRAINT FK_Client_ID_Personne FOREIGN KEY (ID_Personne) REFERENCES Personne(ID_Personne);
+ALTER TABLE Inventeur ADD CONSTRAINT FK_Inventeur_ID_Personne FOREIGN KEY (ID_Personne) REFERENCES Personne(ID_Personne);
+ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Progression FOREIGN KEY (ID_Progression) REFERENCES Progression(ID_Progression);
+ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Client FOREIGN KEY (ID_Client) REFERENCES Client(ID_Client);
+ALTER TABLE Commande ADD CONSTRAINT FK_Commande_ID_Personne FOREIGN KEY (ID_Personne) REFERENCES Personne(ID_Personne);
+ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Diluant FOREIGN KEY (ID_Diluant) REFERENCES Diluant(ID_Diluant);
+ALTER TABLE Potion ADD CONSTRAINT FK_Potion_ID_Personne FOREIGN KEY (ID_Personne) REFERENCES Personne(ID_Personne);
+ALTER TABLE Ingredient_en_stock ADD CONSTRAINT FK_Ingredient_en_stock_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE Ingredient_en_stock ADD CONSTRAINT FK_Ingredient_en_stock_ID_Fournisseur FOREIGN KEY (ID_Fournisseur) REFERENCES Fournisseur(ID_Fournisseur);
+ALTER TABLE Recipient_en_stock ADD CONSTRAINT FK_Recipient_en_stock_ID_Fournisseur FOREIGN KEY (ID_Fournisseur) REFERENCES Fournisseur(ID_Fournisseur);
+ALTER TABLE Recipient_en_stock ADD CONSTRAINT FK_Recipient_en_stock_ID_Recipient FOREIGN KEY (ID_Recipient) REFERENCES Recipient(ID_Recipient);
+ALTER TABLE Stock_Potion ADD CONSTRAINT FK_Stock_Potion_ID_Potion FOREIGN KEY (ID_Potion) REFERENCES Potion(ID_Potion);
+ALTER TABLE Onguent_en_stock ADD CONSTRAINT FK_Onguent_en_stock_ID_Onguent FOREIGN KEY (ID_Onguent) REFERENCES Onguent(ID_Onguent);
+ALTER TABLE Diluant_en_stock ADD CONSTRAINT FK_Diluant_en_stock_ID_Fournisseur FOREIGN KEY (ID_Fournisseur) REFERENCES Fournisseur(ID_Fournisseur);
+ALTER TABLE Diluant_en_stock ADD CONSTRAINT FK_Diluant_en_stock_ID_Diluant FOREIGN KEY (ID_Diluant) REFERENCES Diluant(ID_Diluant);
+ALTER TABLE Se_compose ADD CONSTRAINT FK_Se_compose_ID_Potion FOREIGN KEY (ID_Potion) REFERENCES Potion(ID_Potion);
+ALTER TABLE Se_compose ADD CONSTRAINT FK_Se_compose_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE est_compose ADD CONSTRAINT FK_est_compose_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE est_compose ADD CONSTRAINT FK_est_compose_ID_Onguent FOREIGN KEY (ID_Onguent) REFERENCES Onguent(ID_Onguent);
+ALTER TABLE Donne_Ingredient ADD CONSTRAINT FK_Donne_Ingredient_ID_Ingredient FOREIGN KEY (ID_Ingredient) REFERENCES Ingredient(ID_Ingredient);
+ALTER TABLE Donne_Ingredient ADD CONSTRAINT FK_Donne_Ingredient_ID_Fournisseur FOREIGN KEY (ID_Fournisseur) REFERENCES Fournisseur(ID_Fournisseur);
+ALTER TABLE Contient_Ingredient ADD CONSTRAINT FK_Contient_Ingredient_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
+ALTER TABLE Contient_Ingredient ADD CONSTRAINT FK_Contient_Ingredient_ID_Ingredient_en_stock FOREIGN KEY (ID_Ingredient_en_stock) REFERENCES Ingredient_en_stock(ID_Ingredient_en_stock);
+ALTER TABLE Contient_Onguent ADD CONSTRAINT FK_Contient_Onguent_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
+ALTER TABLE Contient_Onguent ADD CONSTRAINT FK_Contient_Onguent_ID_Onguent_en_stock FOREIGN KEY (ID_Onguent_en_stock) REFERENCES Onguent_en_stock(ID_Onguent_en_stock);
+ALTER TABLE Donne_Diluant ADD CONSTRAINT FK_Donne_Diluant_ID_Diluant FOREIGN KEY (ID_Diluant) REFERENCES Diluant(ID_Diluant);
+ALTER TABLE Donne_Diluant ADD CONSTRAINT FK_Donne_Diluant_ID_Fournisseur FOREIGN KEY (ID_Fournisseur) REFERENCES Fournisseur(ID_Fournisseur);
+ALTER TABLE Donne_Recipient ADD CONSTRAINT FK_Donne_Recipient_ID_Recipient FOREIGN KEY (ID_Recipient) REFERENCES Recipient(ID_Recipient);
+ALTER TABLE Donne_Recipient ADD CONSTRAINT FK_Donne_Recipient_ID_Fournisseur FOREIGN KEY (ID_Fournisseur) REFERENCES Fournisseur(ID_Fournisseur);
+ALTER TABLE Contient_Recipient_Potion ADD CONSTRAINT FK_Contient_Recipient_Potion_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
+ALTER TABLE Contient_Recipient_Potion ADD CONSTRAINT FK_Contient_Recipient_Potion_ID_Recipient_en_stock FOREIGN KEY (ID_Recipient_en_stock) REFERENCES Recipient_en_stock(ID_Recipient_en_stock);
+ALTER TABLE Contient_Recipient_Potion ADD CONSTRAINT FK_Contient_Recipient_Potion_ID_Stock_Potion FOREIGN KEY (ID_Stock_Potion) REFERENCES Stock_Potion(ID_Stock_Potion);
+
+
+-- Remplie Progression --
+
+INSERT INTO `Progression` (`Statut_Progression`) VALUES
+('Non traitée'),
+('En cours'),
+('Terminée');
+
+-- Remplie Diluant --
+
+INSERT INTO `Diluant` (`Nom_Diluant`, `Prix_Diluant`) VALUES
+('Eau', '5'),
+('Vin', '15'),
+('Lait', '8'),
+('Sang', '18'),
+('Cola', '9');
+
+INSERT INTO `Fournisseur`(`Nom_Fournisseur`, `Tel_Fournisseur`, `Mail_Fournisseur`) VALUES
+('pierre dubois', '0611349913', 'pdubois@hotmail.fr'),
+('jean ratae', '0633564897', 'jean.ratae@gmail.com'),
+('louis manart', '0613457865', 'louismanart@free.com'),
+('albert muisse', '0632659848', 'amuisse@gmail.fr'),
+('henri kaval', '0696857412', 'hikaval@hotmail.com'),
+('polo damido', '0636251458', 'polodam@orange.fr'),
+('lea brouha', '0632549815', 'leabrobro@hotmail.fr');
+
+-- Remplie Ingrédient --
+
+INSERT INTO `Ingredient`(`Nom_Ingredient`, `Prix_Ingredient`, `Temps_Conservation`, `Seuil_Fraicheur`) VALUES
+('racines de marguerite', '9', '32', '20'),
+('chenilles', '5', '19', '10'),
+('orties sechees', '4', '45', '35'),
+('crochets de serpent', '12', '50', '40'),
+('epines de poro', '3', '40', '32'),
+('foie de rat', '8', '10', '6'),
+('poudre de pierre', '18', '150', '130'),
+('sirop d ellebore', '15', '50', '38'),
+('aile d aigle', '20', '62','50'),
+('plume de phenix', '15', '48', '40'),
+('oeuf de dragon ', '100', '80', '70'),
+('ecaille de dragon', '23', '60', '52'),
+('racines de valeriane', '8', '46', '40'),
+('feuille soporifique', '5', '20', '15'),
+('armoise', '23', '35', '28'),
+('scarabees', '40', '25', '20'),
+('racines de gingembre', '18', '37', '29'),
+('bile de tatou', '18', '36', '30'),
+('baies de gui', '13', '40', '28'),
+('brins de valeriane', '12', '34', '28'),
+('corne de dragon', '120', '90', '70');
+
+
+INSERT INTO `Onguent` (`Nom_Onguent`, `Prix_Onguent`) VALUES
+('Poudre de ratatinage', 200),
+('Creme furoncles', 400),
+('Gaz de paix', 150),
+('Gaz pour voler', 300),
+('Poudre de Souffle', 250),
+('Creme morte', 250),
+('Poudre de confusion', 500),
+('Creme de ganda', 6000),
+('Feuille morte', 700);
+
+INSERT INTO `est_compose`(`Quantite`, `ID_Ingredient`, `ID_Onguent`)
+VALUES
+(10, 1, 1),
+(3, 3, 1),
+(2, 4, 1),
+(10, 5, 2),
+(4, 13, 2),
+(2, 16, 2),
+(10, 5, 3),
+(8, 4, 3),
+(2, 18, 4),
+(10, 19, 4),
+(2, 20, 4),
+(10, 15, 5),
+(1, 3, 5),
+(2, 9, 6),
+(5, 2, 6),
+(10, 3, 6),
+(2, 15, 6),
+(10, 18, 7),
+(10, 19, 7),
+(10, 6, 7),
+(1, 3, 8),
+(400, 5, 8),
+(25, 11, 8),
+(50, 12, 8),
+(8, 21, 8),
+(1, 11, 9),
+(3, 21, 9),
+(3, 16, 9),
+(5, 12, 9);
+
+INSERT INTO `Donne_ingredient` (`ID_Ingredient`,`ID_Fournisseur`) VALUES
+(1,7),
+(2,6),
+(3,5),
+(4,4),
+(5,3),
+(6,2),
+(7,1),
+(8,7),
+(9,6),
+(10,5),
+(11,4),
+(12,3),
+(13,2),
+(14,1),
+(15,7),
+(16,6),
+(17,5),
+(18,4),
+(19,3),
+(20,2),
+(21,1);
+
 INSERT INTO `Ingredient_en_stock` (`Date_Entrer`,`Arrive_Depuis`,`ID_Ingredient`, `Quantite_Ingredient`,`ID_Fournisseur`)
 VALUES
-(CURDATE(), 0, ingre, nbr, fourni);
+('2017-03-29', '1', '1','11', 1 ),
+('2017-03-29', '1', '2','22', 2 ),
+('2017-03-29', '1', '3','33', 3),
+('2017-03-29', '1', '4','44', 4 ),
+('2017-03-29', '1', '5','52', 5 ),
+('2017-03-29', '1', '6','15', 6 ),
+('2017-03-29', '1', '7','20', 7),
+('2017-03-29', '1', '8','30', 6 ),
+('2017-03-29', '1', '9','27', 5 ),
+('2017-03-29', '1', '10','14', 4 ),
+('2017-03-29', '1', '11','11', 3 ),
+('2017-03-29', '1', '12','15', 2 ),
+('2017-03-29', '1', '13','13', 1 ),
+('2017-03-29', '1', '14','14', 1 ),
+('2017-03-29', '1', '15','15', 2 ),
+('2017-03-29', '1', '16','16', 3 ),
+('2017-03-29', '1', '17','18', 4 ),
+('2017-03-29', '1', '18','25', 5 ),
+('2017-03-29', '1', '19','35', 5),
+('2017-03-29', '1', '20','5', 6 ),
+('2017-03-29', '1', '21','1', 7 );
 
-SELECT ingredient_en_stock.*
-FROM ingredient INNER JOIN ingredient_en_stock ON ingredient.ID_Ingredient = ingredient_en_stock.ID_ingredient
-WHERE ingredient.Nom_Ingredient = voiringre; 
-END |
-DELIMITER ;
-
-CALL Ajout_Ingredient(4 , 27 , 4 , 'crochets de serpent' );
-
-
-------------------------------------
-
-
-SELECT *
-FROM commande
-WHERE ID_Commande = 2;
-
-UPDATE Commande
-SET ID_Progression = 3
-WHERE ID_Commande = 2;
-
-SELECT Commande.ID_Commande, Contient_Recipient_Potion.Quantite_Recipient AS Nombre_Recipient, recipient_en_stock.Quantite_Recipient
-FROM ((Commande INNER JOIN Contient_Recipient_Potion ON Commande.ID_Commande = Contient_Recipient_Potion.ID_Commande) INNER JOIN recipient_en_stock
- ON Contient_Recipient_Potion.ID_Recipient_en_Stock = recipient_en_stock.ID_Recipient_en_Stock)
-WHERE Commande.ID_Commande = 2;
-
-UPDATE ((recipient_en_stock INNER JOIN Contient_Recipient_Potion ON recipient_en_stock.ID_Recipient_en_Stock = Contient_Recipient_Potion.ID_Recipient_en_Stock) INNER JOIN Commande ON Contient_Recipient_Potion.ID_Commande = Commande.ID_Commande)
-SET recipient_en_stock.Quantite_Recipient = recipient_en_stock.Quantite_Recipient - 1
-WHERE Commande.ID_Commande = 7;
+INSERT INTO `Personne` (`Nom_Personne`) VALUES
+('Alu'),
+('Arn'),
+('Doctor'),
+('Era'),
+('Natsu'),
+('Fee'),
+('Jaf'),
+('Kart'),
+('Zel'),
+('Dumbledore'),
+('Fuche'),
+('Trucmuche'),
+('Grogo'),
+('Hyperrion'),
+('Jurico');
 
 
-UPDATE ((Stock_Potion INNER JOIN Contient_Recipient_Potion ON Stock_Potion.ID_Stock_Potion = Contient_Recipient_Potion.ID_Stock_Potion) INNER JOIN Commande ON Contient_Recipient_Potion.ID_Commande = Commande.ID_Commande)
-SET Stock_Potion.Quantite_Potion = Stock_Potion.Quantite_Potion - 1
-WHERE Commande.ID_Commande = 7;
+-- Remplie Inventeur --
+
+INSERT INTO `inventeur` (`Nom_Inventeur`, `Prenom_Inventeur`, `ID_Personne`) VALUES
+('Alu', 'Card', 1),
+('Arn', 'Hide', 2),
+('Doctor', 'Starnge', 3),
+('Era', 'Gon', 4),
+('Natsu', 'Dragnir', 5),
+('Fee', 'Morganne', 6),
+('Jaf', 'Har', 7),
+('Kart', 'Hus', 8),
+('Zel', 'Da', 9),
+('Dumbledore', 'Albus', 10);
+
+INSERT INTO `client` (`Nom_Client`, `Prenom_Client`, `Tel_Client`, `Civilite`, `Code_Postal`, `Ville_Client`, `Adresse_Client`, `Mail`, `ID_Personne`) VALUES
+('Fuche', 'Ysolda', 0654244798, 'F', 77333, 'Unilo', '47 avenue de la longue vue', 'ysolda.fuche@baguette.com',11),
+('Trucmuche', 'Francis', 650463874, 'M', 11555,	'Hululo', '78 rue de la baguette', 'francis.trucmuche@magie.fr',12),
+('Grogo', 'Hercules', 674356879, 'M', 88999, 'Lunatirit', '14 impasse passe-partout', 'grogo.hercules@yggdrasil.com',13),
+('Hyperrion', 'Ethiene', 789665324, 'M', 22000,	'MagieCentre', '98 rue rien', 'ehiene.hyperrion@magie.com',14),
+('Jurico', 'Mathis',	585857468, 'M', 99555, 'Flobu',	'27 rue anniversaire', 'mathis.jurico@magie.com',15);
 
 
-UPDATE ((Onguent_en_stock INNER JOIN Contient_Onguent ON Onguent_en_stock.ID_Onguent_en_stock = Contient_Onguent.ID_Onguent_en_stock) INNER JOIN Commande ON Contient_Onguent.ID_Commande = Commande.ID_Commande)
-SET Onguent_en_stock.Quantite_stock_onguent = Onguent_en_stock.Quantite_stock_onguent - 1
-WHERE Commande.ID_Commande = 7;
+-- Remplie  Commande --
+
+INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`ID_Progression`, `ID_Client`, `ID_Personne`) VALUES
+('1500','2017-10-12','1','1', 1, 11),
+('1400','2017-10-14','2','2', 2, 12),
+('1300','2017-10-14','3','3', 3, 13),
+('1700','2017-10-14','4','3', 4, 14),
+('1800','2017-10-14','5','2', 5, 15),
+('1900','2017-10-14','6','1', 1, 11),
+('2400','2017-10-14','7','2', 2, 12),
+('2500','2017-10-14','8','3', 3, 13),
+('1400','2017-10-14','9','2', 4, 14),
+('3300','2017-10-13','10','1', 5, 15);
+
+-- Remplie Potion --
+
+INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `Valider_Potion`, `ID_Diluant`, `ID_Personne`) VALUES
+('Potion de ratatinage', 350, 40, 1, 1, 1),
+('Potion furoncles', 200, 45, 1, 1, 2),
+('Filtre de paix', 450, 35, 1, 2, 3),
+('Potion de vol', 300, 50, 1, 3, 4),
+('Souffle du dragon', 700, 55, 1, 4, 5),
+('Filtre de mort vivante', 400, 20, 1, 4, 6),
+('Potion de confusion', 500, 60, 1, 5, 7),
+('Potion de ganda', 8500, 15, 1, 1, 8),
+('Amortentia', 300, 25, 0, 1, 9);
+
+
+
+INSERT INTO `Recipient` (`Nom_Recipient`, `Contenance_Recipient`, `Prix_Recipient`) VALUES
+('Fiole', '2', '5'),
+('Erlenmeyer ','3', '10'),
+('Pot', '4', '15'),
+('Marmite', '10', '20'),
+('Tube', '1', '2');
+
+
+INSERT INTO `Diluant_en_stock` (`Quantite_Diluant`, `ID_Fournisseur`, `ID_Diluant`) VALUES
+(10, 1, 5),
+(20, 2, 4),
+(5, 3, 3),
+(15, 4, 2),
+(25, 5, 1);
+
+
+INSERT INTO `Donne_Diluant` (`ID_Diluant`, `ID_Fournisseur`) VALUES
+(1, 1),
+(1, 2),
+(2, 2),
+(1, 3),
+(2, 3),
+(3, 3),
+(1, 4),
+(2, 4),
+(3, 4),
+(1, 5),
+(2, 5),
+(3, 5),
+(4, 5),
+(1, 6),
+(2, 6),
+(3, 6),
+(4, 6),
+(1, 7),
+(2, 7),
+(3, 7),
+(4, 7),
+(5, 7);
+
+
+INSERT INTO `Recipient_en_Stock` (`Quantite_Recipient`,`ID_Fournisseur`,`ID_Recipient`) VALUES
+('200','1','1'),
+('100','2','2'),
+('100','3','3'),
+('100','4','4'),
+('200','5','5'),
+('200','6','1'),
+('200','7','2'),
+('100','4','1'),
+('100','2','3'),
+('100','3','2');
+
+
+INSERT INTO `Donne_Recipient` (`ID_Recipient`, `ID_Fournisseur`) VALUES
+('1','1'),
+('2','2'),
+('3','3'),
+('4','4'),
+('5','5');
+
+INSERT INTO `Se_compose` (`Quantite_Ingredient`, `ID_Potion`, `ID_Ingredient`)
+VALUES
+('4', '1', '1'),
+('8', '1', '3'),
+('2', '1', '9'),
+('3', '1', '18'),
+('2', '1', '16'),
+('6', '2', '6'),
+('1', '2', '10'),
+('1', '2', '18'),
+('1', '3', '21'),
+('1', '3', '11'),
+('4', '3', '12'),
+('10', '4', '10'),
+('8', '4', '14'),
+('1', '4', '19'),
+('4', '5', '21'),
+('50', '5', '5'),
+('5', '6', '9'),
+('3', '6', '17'),
+('1', '6', '15'),
+('5', '7', '8'),
+('2', '7', '16'),
+('3', '7', '19'),
+('1', '7', '7'),
+('10', '8', '21'),
+('30', '8', '11'),
+('100', '8', '12'),
+('500', '8', '5'),
+('1', '8', '3'),
+('15', '9', '3'),
+('2', '9', '8'),
+('4', '9', '17'),
+('15', '9', '2');
+
+INSERT INTO `Stock_Potion` (`Quantite_Potion`, `ID_Potion`)
+VALUES
+('100', '1'),
+('100', '2'),
+('100', '3'),
+('100', '4'),
+('75', '5'),
+('100', '6'),
+('100', '7'),
+('5', '8'),
+('100', '9');
+
+
+INSERT INTO `Contient_Recipient_Potion` (`Quantite_Recipient`, `ID_commande`, `ID_Recipient_en_stock`, `ID_Stock_Potion`)
+VALUES
+('1','1','1','1'),
+('1','2','2','2'),
+('1','3','3','3'),
+('1','4','1','4'),
+('1','5','2','5'),
+('1','6','3','6'),
+('1','7','1','7'),
+('1','8','2','8'),
+('1','9','3','9'),
+('1','10','1','1');
+
+
+
+INSERT INTO `Contient_Ingredient` (`Quantite`, `ID_commande`, `ID_Ingredient_en_stock`)
+VALUES
+('1','1','1'),
+('1','2','2'),
+('1','3','3'),
+('1','4','4'),
+('1','5','5'),
+('1','6','6'),
+('1','7','7'),
+('1','8','8'),
+('1','9','9'),
+('1','10','10');
+
+INSERT INTO `Onguent_en_stock` (`ID_Onguent`)
+VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(5),
+(4);
+
+
+INSERT INTO `Contient_Onguent` (`Quantite`, `ID_commande`, `ID_Onguent_en_stock`)
+VALUES
+('1','1','1'),
+('1','2','2'),
+('1','3','3'),
+('1','4','4'),
+('1','5','5'),
+('1','6','6'),
+('1','7','5'),
+('1','8','4'),
+('1','9','3'),
+('1','10','1');
