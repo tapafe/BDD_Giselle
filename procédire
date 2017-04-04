@@ -69,5 +69,5 @@ WHERE Commande.ID_Commande = 7;
 
 
 UPDATE ((Onguent_en_stock INNER JOIN Contient_Onguent ON Onguent_en_stock.ID_Onguent_en_stock = Contient_Onguent.ID_Onguent_en_stock) INNER JOIN Commande ON Contient_Onguent.ID_Commande = Commande.ID_Commande)
-SET Onguent_en_stock.Quantite_stock_onguent = Onguent_en_stock.Quantite_stock_onguent - 1
+SET Onguent_en_stock.Quantite_onguent = Onguent_en_stock.Quantite_onguent - 1
 WHERE Commande.ID_Commande = 7;
