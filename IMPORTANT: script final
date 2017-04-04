@@ -1,3 +1,6 @@
+CREATE DATABASE projet_bdd;
+USE projet_bdd;
+
 #------------------------------------------------------------
 #        Script MySQL.
 #------------------------------------------------------------
@@ -9,14 +12,14 @@
 
 CREATE TABLE Client(
         ID_Client      int (11) Auto_increment  NOT NULL ,
-        Nom_Client     Varchar (255) NOT NULL ,
-        Prenom_Client  Varchar (255) NOT NULL ,
+        Nom_Client     Varchar (25) NOT NULL ,
+        Prenom_Client  Varchar (25) NOT NULL ,
         Tel_Client     Int NOT NULL ,
-        Civilite       Varchar (255) NOT NULL ,
+        Civilite       Varchar (25) NOT NULL ,
         Code_Postal    Int NOT NULL ,
-        Ville_Client   Varchar (255) NOT NULL ,
-        Adresse_client Varchar (255) NOT NULL ,
-        Mail           Varchar (255) NOT NULL ,
+        Ville_Client   Varchar (25) NOT NULL ,
+        Adresse_client Varchar (25) NOT NULL ,
+        Mail           Varchar (25) NOT NULL ,
         ID_Personne    Int NOT NULL ,
         PRIMARY KEY (ID_Client ,ID_Personne )
 )ENGINE=InnoDB;
@@ -28,7 +31,7 @@ CREATE TABLE Client(
 
 CREATE TABLE Ingredient(
         ID_Ingredient      int (11) Auto_increment  NOT NULL ,
-        Nom_Ingredient     Varchar (255) NOT NULL ,
+        Nom_Ingredient     Varchar (25) NOT NULL ,
         Prix_Ingredient    DECIMAL (15,3)  NOT NULL ,
         Temps_Conservation Numeric NOT NULL ,
         Seuil_Fraicheur    Int ,
@@ -42,8 +45,8 @@ CREATE TABLE Ingredient(
 
 CREATE TABLE Inventeur(
         ID_Inventeur     int (11) Auto_increment  NOT NULL ,
-        Nom_Inventeur    Varchar (255) NOT NULL ,
-        Prenom_inventeur Varchar (255) NOT NULL ,
+        Nom_Inventeur    Varchar (25) NOT NULL ,
+        Prenom_inventeur Varchar (25) NOT NULL ,
         ID_Personne      Int NOT NULL ,
         PRIMARY KEY (ID_Inventeur ,ID_Personne )
 )ENGINE=InnoDB;
@@ -55,9 +58,9 @@ CREATE TABLE Inventeur(
 
 CREATE TABLE Commande(
         ID_commande         int (11) Auto_increment  NOT NULL ,
-        No_Commande         Int NOT NULL ,
         Prix_Commande_Total DECIMAL (15,3)  NOT NULL ,
         Date_De_Commande    Date NOT NULL ,
+        No_Commande         Int NOT NULL ,
         ID_Progression      Int ,
         ID_Client           Int NOT NULL ,
         ID_Personne         Int NOT NULL ,
@@ -71,7 +74,7 @@ CREATE TABLE Commande(
 
 CREATE TABLE Progression(
         ID_Progression     int (11) Auto_increment  NOT NULL ,
-        Statut_Progression Varchar (255) NOT NULL ,
+        Statut_Progression Varchar (25) NOT NULL ,
         PRIMARY KEY (ID_Progression )
 )ENGINE=InnoDB;
 
@@ -82,9 +85,9 @@ CREATE TABLE Progression(
 
 CREATE TABLE Fournisseur(
         ID_Fournisseur   int (11) Auto_increment  NOT NULL ,
-        Nom_Fournisseur  Varchar (255) NOT NULL ,
+        Nom_Fournisseur  Varchar (25) NOT NULL ,
         Tel_Fournisseur  Int ,
-        Mail_Fournisseur Varchar (255) ,
+        Mail_Fournisseur Varchar (50) ,
         PRIMARY KEY (ID_Fournisseur )
 )ENGINE=InnoDB;
 
@@ -108,7 +111,7 @@ CREATE TABLE Recipient(
 
 CREATE TABLE Onguent(
         ID_Onguent   int (11) Auto_increment  NOT NULL ,
-        Nom_Onguent  Varchar (255) NOT NULL ,
+        Nom_Onguent  Varchar (25) NOT NULL ,
         Prix_Onguent DECIMAL (15,3)  NOT NULL ,
         PRIMARY KEY (ID_Onguent )
 )ENGINE=InnoDB;
@@ -120,8 +123,8 @@ CREATE TABLE Onguent(
 
 CREATE TABLE Diluant(
         ID_Diluant   int (11) Auto_increment  NOT NULL ,
-        Nom_Diluant  Varchar (255) NOT NULL ,
-        Prix_Diluant Int ,
+        Nom_Diluant  Varchar (25) NOT NULL ,
+        Prix_Diluant DECIMAL (15,3)  ,
         PRIMARY KEY (ID_Diluant )
 )ENGINE=InnoDB;
 
@@ -132,10 +135,10 @@ CREATE TABLE Diluant(
 
 CREATE TABLE Potion(
         ID_Potion      int (11) Auto_increment  NOT NULL ,
-        Nom_Potion     Varchar (255) NOT NULL ,
+        Nom_Potion     Varchar (25) NOT NULL ,
         Prix_Potion    DECIMAL (15,3)  ,
         Temperature    Int NOT NULL ,
-        Valider_Potion Varchar (255) NOT NULL ,
+        Valider_Potion Bool NOT NULL ,
         ID_Diluant     Int ,
         ID_Personne    Int NOT NULL ,
         PRIMARY KEY (ID_Potion ) ,
@@ -176,9 +179,10 @@ CREATE TABLE Recipient_en_stock(
 #------------------------------------------------------------
 
 CREATE TABLE Stock_Potion(
-        ID_Stock_Potion int (11) Auto_increment  NOT NULL ,
-        Quantite_Potion Int ,
-        ID_Potion       Int NOT NULL ,
+        ID_Stock_Potion       int (11) Auto_increment  NOT NULL ,
+        Quantite_Stock_Potion Int NOT NULL ,
+        Quantite_Potion       Int ,
+        ID_Potion             Int NOT NULL ,
         PRIMARY KEY (ID_Stock_Potion )
 )ENGINE=InnoDB;
 
@@ -188,8 +192,9 @@ CREATE TABLE Stock_Potion(
 #------------------------------------------------------------
 
 CREATE TABLE Onguent_en_stock(
-        ID_Onguent_en_stock int (11) Auto_increment  NOT NULL ,
-        ID_Onguent          Int ,
+        ID_Onguent_en_stock    int (11) Auto_increment  NOT NULL ,
+        Quantite_Stock_Onguent Int NOT NULL ,
+        ID_Onguent             Int ,
         PRIMARY KEY (ID_Onguent_en_stock )
 )ENGINE=InnoDB;
 
@@ -343,7 +348,6 @@ ALTER TABLE Donne_Recipient ADD CONSTRAINT FK_Donne_Recipient_ID_Fournisseur FOR
 ALTER TABLE Contient_Recipient_Potion ADD CONSTRAINT FK_Contient_Recipient_Potion_ID_commande FOREIGN KEY (ID_commande) REFERENCES Commande(ID_commande);
 ALTER TABLE Contient_Recipient_Potion ADD CONSTRAINT FK_Contient_Recipient_Potion_ID_Recipient_en_stock FOREIGN KEY (ID_Recipient_en_stock) REFERENCES Recipient_en_stock(ID_Recipient_en_stock);
 ALTER TABLE Contient_Recipient_Potion ADD CONSTRAINT FK_Contient_Recipient_Potion_ID_Stock_Potion FOREIGN KEY (ID_Stock_Potion) REFERENCES Stock_Potion(ID_Stock_Potion);
-
 
 -- Remplie Progression --
 
@@ -542,16 +546,16 @@ INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`
 
 -- Remplie Potion --
 
-INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `ID_Diluant`, `ID_Personne`,`Valider_Potion`) VALUES
-('Potion de ratatinage', 350, 40, 1, 1,'Valider'),
-('Potion furoncles', 200, 45, 1, 2,'Valider'),
-('Filtre de paix', 450, 35, 2, 3,'Valider'),
-('Potion de vol', 300, 50, 3, 4,'Valider'),
-('Souffle du dragon', 700, 55, 4, 5,'Valider'),
-('Filtre de mort vivante', 400, 20, 4, 6,'Valider'),
-('Potion de confusion', 500, 60, 5, 7,'Valider'),
-('Potion de ganda', 8500, 15, 1, 8,'Valider'),
-('Amortentia', 300, 25, 5, 9,'Valider');
+INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `Valider_Potion`, `ID_Diluant`, `ID_Personne`) VALUES
+('Potion de ratatinage', 350, 40, 1, 1, 1),
+('Potion furoncles', 200, 45, 1, 1, 2),
+('Filtre de paix', 450, 35, 1, 2, 3),
+('Potion de vol', 300, 50, 1, 3, 4),
+('Souffle du dragon', 700, 55, 1, 4, 5),
+('Filtre de mort vivante', 400, 20, 1, 4, 6),
+('Potion de confusion', 500, 60, 1, 5, 7),
+('Potion de ganda', 8500, 15, 1, 1, 8),
+('Amortentia', 300, 25, 0, 1, 9);
 
 
 
@@ -692,16 +696,16 @@ VALUES
 ('1','9','9'),
 ('1','10','10');
 
-INSERT INTO `Onguent_en_stock` (`ID_Onguent`)
+INSERT INTO `Onguent_en_stock` (`ID_Onguent`, `Quantite_Stock_Onguent`)
 VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(5),
-(4);
+(1, 100),
+(2, 100),
+(3, 100),
+(4, 100),
+(5, 100),
+(6, 100),
+(5, 100),
+(4, 100);
 
 
 INSERT INTO `Contient_Onguent` (`Quantite`, `ID_commande`, `ID_Onguent_en_stock`)
