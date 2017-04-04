@@ -55,9 +55,9 @@ CREATE TABLE Inventeur(
 
 CREATE TABLE Commande(
         ID_commande         int (11) Auto_increment  NOT NULL ,
+        No_Commande         Int NOT NULL ,
         Prix_Commande_Total DECIMAL (15,3)  NOT NULL ,
         Date_De_Commande    Date NOT NULL ,
-        No_Commande         Int NOT NULL ,
         ID_Progression      Int ,
         ID_Client           Int NOT NULL ,
         ID_Personne         Int NOT NULL ,
@@ -176,10 +176,9 @@ CREATE TABLE Recipient_en_stock(
 #------------------------------------------------------------
 
 CREATE TABLE Stock_Potion(
-        ID_Stock_Potion       int (11) Auto_increment  NOT NULL ,
-        Quantite_Stock_Potion Int NOT NULL ,
-        Quantite_Potion       Int ,
-        ID_Potion             Int NOT NULL ,
+        ID_Stock_Potion int (11) Auto_increment  NOT NULL ,
+        Quantite_Potion Int ,
+        ID_Potion       Int NOT NULL ,
         PRIMARY KEY (ID_Stock_Potion )
 )ENGINE=InnoDB;
 
@@ -189,9 +188,8 @@ CREATE TABLE Stock_Potion(
 #------------------------------------------------------------
 
 CREATE TABLE Onguent_en_stock(
-        ID_Onguent_en_stock    int (11) Auto_increment  NOT NULL ,
-        Quantite_Stock_Onguent Int NOT NULL ,
-        ID_Onguent             Int ,
+        ID_Onguent_en_stock int (11) Auto_increment  NOT NULL ,
+        ID_Onguent          Int ,
         PRIMARY KEY (ID_Onguent_en_stock )
 )ENGINE=InnoDB;
 
@@ -544,16 +542,16 @@ INSERT INTO `Commande` (`Prix_commande_total`,`Date_de_commande`,`No_Commande`,`
 
 -- Remplie Potion --
 
-INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `ID_Diluant`, `ID_Personne`,`Valider_Potion`) VALUES
-('Potion de ratatinage', 350, 40, 1, 1,'Valider'),
-('Potion furoncles', 200, 45, 1, 2,'Valider'),
-('Filtre de paix', 450, 35, 2, 3,'Valider'),
-('Potion de vol', 300, 50, 3, 4,'Valider'),
-('Souffle du dragon', 700, 55, 4, 5,'Valider'),
-('Filtre de mort vivante', 400, 20, 4, 6,'Valider'),
-('Potion de confusion', 500, 60, 5, 7,'Valider'),
-('Potion de ganda', 8500, 15, 1, 8,'Valider'),
-('Amortentia', 300, 25, 5, 9,'Valider');
+INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `Valider_Potion`, `ID_Diluant`, `ID_Personne`) VALUES
+('Potion de ratatinage', 350, 40, 1, 1, 1),
+('Potion furoncles', 200, 45, 1, 1, 2),
+('Filtre de paix', 450, 35, 1, 2, 3),
+('Potion de vol', 300, 50, 1, 3, 4),
+('Souffle du dragon', 700, 55, 1, 4, 5),
+('Filtre de mort vivante', 400, 20, 1, 4, 6),
+('Potion de confusion', 500, 60, 1, 5, 7),
+('Potion de ganda', 8500, 15, 1, 1, 8),
+('Amortentia', 300, 25, 0, 1, 9);
 
 
 
@@ -563,6 +561,7 @@ INSERT INTO `Recipient` (`Nom_Recipient`, `Contenance_Recipient`, `Prix_Recipien
 ('Pot', '4', '15'),
 ('Marmite', '10', '20'),
 ('Tube', '1', '2');
+
 
 INSERT INTO `Diluant_en_stock` (`Quantite_Diluant`, `ID_Fournisseur`, `ID_Diluant`) VALUES
 (10, 1, 5),
@@ -651,3 +650,69 @@ VALUES
 ('2', '9', '8'),
 ('4', '9', '17'),
 ('15', '9', '2');
+
+INSERT INTO `Stock_Potion` (`Quantite_Potion`, `ID_Potion`)
+VALUES
+('100', '1'),
+('100', '2'),
+('100', '3'),
+('100', '4'),
+('75', '5'),
+('100', '6'),
+('100', '7'),
+('5', '8'),
+('100', '9');
+
+
+INSERT INTO `Contient_Recipient_Potion` (`Quantite_Recipient`, `ID_commande`, `ID_Recipient_en_stock`, `ID_Stock_Potion`)
+VALUES
+('1','1','1','1'),
+('1','2','2','2'),
+('1','3','3','3'),
+('1','4','1','4'),
+('1','5','2','5'),
+('1','6','3','6'),
+('1','7','1','7'),
+('1','8','2','8'),
+('1','9','3','9'),
+('1','10','1','1');
+
+
+
+INSERT INTO `Contient_Ingredient` (`Quantite`, `ID_commande`, `ID_Ingredient_en_stock`)
+VALUES
+('1','1','1'),
+('1','2','2'),
+('1','3','3'),
+('1','4','4'),
+('1','5','5'),
+('1','6','6'),
+('1','7','7'),
+('1','8','8'),
+('1','9','9'),
+('1','10','10');
+
+INSERT INTO `Onguent_en_stock` (`ID_Onguent`)
+VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(5),
+(4);
+
+
+INSERT INTO `Contient_Onguent` (`Quantite`, `ID_commande`, `ID_Onguent_en_stock`)
+VALUES
+('1','1','1'),
+('1','2','2'),
+('1','3','3'),
+('1','4','4'),
+('1','5','5'),
+('1','6','6'),
+('1','7','5'),
+('1','8','4'),
+('1','9','3'),
+('1','10','1');
