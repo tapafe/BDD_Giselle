@@ -193,6 +193,7 @@ CREATE TABLE Stock_Potion(
 CREATE TABLE Onguent_en_stock(
         ID_Onguent_en_stock int (11) Auto_increment  NOT NULL ,
         ID_Onguent          Int ,
+        Quantite_Onguent   Int ,
         PRIMARY KEY (ID_Onguent_en_stock )
 )ENGINE=InnoDB;
 
@@ -695,16 +696,16 @@ VALUES
 ('1','9','9'),
 ('1','10','10');
 
-INSERT INTO `Onguent_en_stock` (`ID_Onguent`)
+INSERT INTO `Onguent_en_stock` (`ID_Onguent`, `Quantite_Onguent`)
 VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(5),
-(4);
+(1, 100),
+(2, 100),
+(3, 100),
+(4, 100),
+(5, 100),
+(6, 100),
+(5, 100),
+(4, 100);
 
 
 INSERT INTO `Contient_Onguent` (`Quantite`, `ID_commande`, `ID_Onguent_en_stock`)
