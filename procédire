@@ -1,0 +1,73 @@
+DELIMITER |
+CREATE PROCEDURE Consultation_Commande(IN p_nom VARCHAR(255))
+BEGIN
+SELECT DISTINCT Commande.ID_Commande, Client.Prenom_Client, Client.Nom_Client, Client.Adresse_Client, Client.Ville_Client, Client.Code_Postal, Commande.Prix_Commande_Total, Commande.Date_De_Commande
+FROM Client INNER JOIN Commande ON Commande.ID_Personne = Client.ID_Personne
+INNER JOIN Personne ON Client.ID_Personne = Personne.ID_Personne
+WHERE Personne.Nom_Personne = p_nom ;
+END |
+DELIMITER ;
+CALL Consultation_Commande('Fuche'); -- Pas oublier ''
+
+-------------------------------------
+
+DELIMITER |
+CREATE PROCEDURE Supression_Ingredient()
+BEGIN
+UPDATE Ingredient_en_stock
+SET Arrive_Depuis = DATEDIFF(CURDATE(), Ingredient_en_stock.Date_Entrer);
+
+DELETE s
+FROM Ingredient i
+INNER JOIN Ingredient_en_stock s ON i.ID_Ingredient = s.ID_Ingredient
+WHERE i.Temps_Conservation <= s.Arrive_Depuis;
+END |
+DELIMITER ;
+
+-----------------------------------
+
+DELIMITER |
+CREATE PROCEDURE Ajout_Ingredient(ingre INT, nbr INT, fourni INT, voiringre CHAR)
+BEGIN
+INSERT INTO `Ingredient_en_stock` (`Date_Entrer`,`Arrive_Depuis`,`ID_Ingredient`, `Quantite_Ingredient`,`ID_Fournisseur`)
+VALUES
+(CURDATE(), 0, ingre, nbr, fourni);
+
+SELECT ingredient_en_stock.*
+FROM ingredient INNER JOIN ingredient_en_stock ON ingredient.ID_Ingredient = ingredient_en_stock.ID_ingredient
+WHERE ingredient.Nom_Ingredient = voiringre; 
+END |
+DELIMITER ;
+
+CALL Ajout_Ingredient(4 , 27 , 4 , 'crochets de serpent' );
+
+
+------------------------------------
+
+
+SELECT *
+FROM commande
+WHERE ID_Commande = 2;
+
+UPDATE Commande
+SET ID_Progression = 3
+WHERE ID_Commande = 2;
+
+SELECT Commande.ID_Commande, Contient_Recipient_Potion.Quantite_Recipient AS Nombre_Recipient, recipient_en_stock.Quantite_Recipient
+FROM ((Commande INNER JOIN Contient_Recipient_Potion ON Commande.ID_Commande = Contient_Recipient_Potion.ID_Commande) INNER JOIN recipient_en_stock
+ ON Contient_Recipient_Potion.ID_Recipient_en_Stock = recipient_en_stock.ID_Recipient_en_Stock)
+WHERE Commande.ID_Commande = 2;
+
+UPDATE ((recipient_en_stock INNER JOIN Contient_Recipient_Potion ON recipient_en_stock.ID_Recipient_en_Stock = Contient_Recipient_Potion.ID_Recipient_en_Stock) INNER JOIN Commande ON Contient_Recipient_Potion.ID_Commande = Commande.ID_Commande)
+SET recipient_en_stock.Quantite_Recipient = recipient_en_stock.Quantite_Recipient - 1
+WHERE Commande.ID_Commande = 7;
+
+
+UPDATE ((Stock_Potion INNER JOIN Contient_Recipient_Potion ON Stock_Potion.ID_Stock_Potion = Contient_Recipient_Potion.ID_Stock_Potion) INNER JOIN Commande ON Contient_Recipient_Potion.ID_Commande = Commande.ID_Commande)
+SET Stock_Potion.Quantite_Potion = Stock_Potion.Quantite_Potion - 1
+WHERE Commande.ID_Commande = 7;
+
+
+UPDATE ((Onguent_en_stock INNER JOIN Contient_Onguent ON Onguent_en_stock.ID_Onguent_en_stock = Contient_Onguent.ID_Onguent_en_stock) INNER JOIN Commande ON Contient_Onguent.ID_Commande = Commande.ID_Commande)
+SET Onguent_en_stock.Quantite_stock_onguent = Onguent_en_stock.Quantite_stock_onguent - 1
+WHERE Commande.ID_Commande = 7;
