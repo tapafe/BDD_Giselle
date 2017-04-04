@@ -181,7 +181,6 @@ CREATE TABLE Recipient_en_stock(
 CREATE TABLE Stock_Potion(
         ID_Stock_Potion       int (11) Auto_increment  NOT NULL ,
         Quantite_Stock_Potion Int NOT NULL ,
-        Quantite_Potion       Int ,
         ID_Potion             Int NOT NULL ,
         PRIMARY KEY (ID_Stock_Potion )
 )ENGINE=InnoDB;
