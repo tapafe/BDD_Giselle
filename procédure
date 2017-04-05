@@ -1,14 +1,6 @@
 DELIMITER |
 CREATE PROCEDURE Consultation_Commande(IN p_nom VARCHAR(255))
 BEGIN
-SELECT DISTINCT Commande.ID_Commande, Client.Prenom_Client, Client.Nom_Client, Client.Adresse_Client, Client.Ville_Client, Client.Code_Postal, Commande.Prix_Commande_Total, Commande.Date_De_Commande
-FROM Client INNER JOIN Commande ON Commande.ID_Personne = Client.ID_Personne
-INNER JOIN Personne ON Client.ID_Personne = Personne.ID_Personne
-WHERE Personne.Nom_Personne = p_nom ;
-END |
-DELIMITER |
-CREATE PROCEDURE Consultation_Commande(IN p_nom VARCHAR(255))
-BEGIN
 SELECT DISTINCT Commande.ID_Commande, Client.Prenom_Client, Client.Nom_Client, Client.Adresse_Client, Client.Ville_Client, Client.Code_Postal, Commande.Prix_Commande_Total, Commande.Date_De_Commande, Contient_Recipient_Potion.Quantite_Recipient, recipient.Nom_Recipient
 FROM ((((Client INNER JOIN Commande ON Commande.ID_Personne = Client.ID_Personne) INNER JOIN Contient_Recipient_Potion ON Commande.ID_Commande = Contient_Recipient_Potion.ID_Commande) INNER JOIN recipient_en_stock on Contient_Recipient_Potion.ID_Stock_Potion = recipient_en_stock.ID_Recipient_en_Stock) INNER JOIN recipient ON recipient_en_stock.ID_Recipient = recipient.ID_Recipient)
 INNER JOIN Personne ON Client.ID_Personne = Personne.ID_Personne
@@ -100,33 +92,3 @@ WHERE Potion.Valider_Potion =  "Refuser";
 UPDATE Potion
 SET Valider_Potion = "Valider"
 WHERE Valider_Potion = "Attente";
-
-UPDATE ((ingredient_en_stock INNER JOIN Contient_ingredient ON ingredient_en_stock.ID_ingredient_en_stock = Contient_ingredient.ID_ingredient_en_stock) INNER JOIN Commande ON Contient_ingredient.ID_Commande = Commande.ID_Commande)
-SET ingredient_en_stock.Quantite_Ingredient = ingredient_en_stock.Quantite_Ingredient - retrait_ingredient
-WHERE Commande.ID_Commande = nbrcom;
-END |
-DELIMITER ;
-
-
-----------------------------------------
-
-
-
-INSERT INTO `Potion` (`Nom_Potion`, `Prix_Potion`, `Temperature`, `ID_Diluant`, `ID_Personne`,`Valider_Potion`) VALUES
-('Potion de test', 350, 40, 1, 1,'Refuser');
-
-DELETE SC
-FROM  Potion P INNER JOIN Se_Compose SC ON SC.ID_Potion = P.ID_Potion
-WHERE P.Valider_Potion =  "Refuser";
-
-DELETE FROM Potion
-WHERE Potion.Valider_Potion =  "Refuser";
-
-
-----------------------------------------
-
-
-UPDATE Potion
-SET Valider_Potion = "Valider"
-WHERE Valider_Potion = "Attente";
-
