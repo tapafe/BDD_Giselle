@@ -57,122 +57,66 @@ GROUP BY Potion.Nom_Potion;
 
 
 
-
-
+Requette d ajout de potion
 
 
 
 DELIMITER |
- CREATE PROCEDURE AjoutRecette (IN IDPersonne INT, IN NomPotion VARCHAR(255),
- IN Ingredient1 VARCHAR(255) ,IN QuantiteIngredient1 INT(11),
-  IN Ingredient2 VARCHAR(255),IN QuantiteIngredient2 INT(11),
-  IN Ingredient3 VARCHAR(255),IN QuantiteIngredient3 INT(11),
- IN Ingredient4 VARCHAR(255),IN QuantiteIngredient4 INT(11),
- IN Ingredient5 VARCHAR(255),IN QuantiteIngredient5 INT(11),
- IN PrixPotion DECIMAL (15,3),IN NomDiluant VARCHAR(255),IN Temperatur INT(255))
+
+CREATE PROCEDURE AjoutRecette (IN IDPersonne INT, IN NomPotion VARCHAR(255),
+IN Ingredient1 VARCHAR(255) ,IN QuantiteIngredient1 INT(11),
+IN Ingredient2 VARCHAR(255),IN QuantiteIngredient2 INT(11),
+IN Ingredient3 VARCHAR(255),IN QuantiteIngredient3 INT(11),
+IN Ingredient4 VARCHAR(255),IN QuantiteIngredient4 INT(11),
+IN Ingredient5 VARCHAR(255),IN QuantiteIngredient5 INT(11),
+IN PrixPotion DECIMAL (15,3),IN NomDiluant VARCHAR(255),IN Temperatur INT(255))
+
 
  BEGIN
 
+ INSERT INTO Potion (`Nom_Potion`,`Prix_Potion`, `Temperature`, `Valider_Potion`,`ID_Personne`,`ID_Diluant`)
+ VALUES  ( NomPotion, PrixPotion, Temperatur, 'Attente',IDPersonne,(SELECT ID_Diluant FROM Diluant WHERE Nom_Diluant = NomDiluant));
 
- INSERT INTO Potion (`ID_Personne`,`Nom_Potion`,`Prix_potion`,`Temperature`, `Valider_Potion`) VALUES
- (IDPersonne, NomPotion, PrixPotion, Temperatur, 'Attente');
+ SET @idpotion = (SELECT ID_Potion FROM Potion ORDER BY ID_Potion DESC LIMIT 1);
+ SET @iding1 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient1);
+ SET @iding2 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient2);
+ SET @iding3 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient3);
+ SET @iding4 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient4);
+ SET @iding5 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient5);
 
+INSERT INTO Se_compose (`Quantite_Ingredient`, `ID_Potion`, `ID_Ingredient`)
+VALUES ( QuantiteIngredient1, @idpotion, @iding1);
 
- UPDATE Potion
- SET `ID_Diluant` = (SELECT ID_Diluant
- 	FROM Diluant
- 	WHERE Nom_Diluant = NomDiluant)
- where ID_Potion = LAST_INSERT_ID();
-
-
-INSERT INTO Se_compose (ID_Potion, ID_Ingredient, Quantite_Ingredient)
-SELECT ID_Potion, '1', '1'
-FROM Potion
-ORDER BY ID_Potion DESC LIMIT 1;
-
-
- UPDATE Se_compose SET
- ID_Ingredient = (SELECT ID_Ingredient
- 	FROM Ingredient
- 	WHERE Nom_Ingredient = Ingredient1),
-  Quantite_Ingredient = QuantiteIngredient1
-  ORDER BY ID_Potion DESC LIMIT 1;
-
-  DELETE FROM `Se_compose`
-  WHERE ID_Ingredient = NULL;
-
- INSERT INTO Se_compose (ID_Potion,ID_Ingredient,Quantite_Ingredient)
-SELECT ID_Potion, '2', '1'
-FROM Potion
-ORDER BY ID_Potion DESC LIMIT 1;
-
- UPDATE Se_compose SET
- ID_Ingredient = (SELECT ID_Ingredient
- 	FROM Ingredient
- 	WHERE Nom_Ingredient = Ingredient2),
-  Quantite_Ingredient = QuantiteIngredient2
-  ORDER BY ID_Potion DESC LIMIT 1;
-
-  DELETE FROM `Se_compose`
-  WHERE ID_Ingredient = NULL;
+DELETE FROM `Se_compose`
+WHERE ID_Ingredient = 22;
 
 
+INSERT INTO Se_compose (`Quantite_Ingredient`, `ID_Potion`, `ID_Ingredient`)
+VALUES ( QuantiteIngredient2, @idpotion, @iding2);
 
- INSERT INTO Se_compose (ID_Potion,ID_Ingredient,Quantite_Ingredient)
-SELECT ID_Potion, '3', '1'
-FROM Potion
-ORDER BY ID_Potion DESC LIMIT 1;
-
- UPDATE Se_compose SET
- ID_Ingredient = (SELECT ID_Ingredient
- 	FROM Ingredient
- 	WHERE Nom_Ingredient = Ingredient3),
-  Quantite_Ingredient = QuantiteIngredient3
-  ORDER BY ID_Potion DESC LIMIT 1;
-
-  DELETE FROM `Se_compose`
-  WHERE ID_Ingredient = NULL;
+DELETE FROM `Se_compose`
+WHERE ID_Ingredient = 22;
 
 
+INSERT INTO Se_compose (`Quantite_Ingredient`, `ID_Potion`, `ID_Ingredient`)
+VALUES ( QuantiteIngredient3, @idpotion, @iding3);
+
+DELETE FROM `Se_compose`
+WHERE ID_Ingredient = 22;
 
 
- INSERT INTO Se_compose (ID_Potion,ID_Ingredient, Quantite_Ingredient)
-SELECT ID_Potion, '4', '1'
-FROM Potion
-ORDER BY ID_Potion DESC LIMIT 1;
+INSERT INTO Se_compose (`Quantite_Ingredient`, `ID_Potion`, `ID_Ingredient`)
+VALUES ( QuantiteIngredient4, @idpotion, @iding4);
 
- UPDATE Se_compose SET
- ID_Ingredient = (SELECT ID_Ingredient
- 	FROM Ingredient
- 	WHERE Nom_Ingredient = Ingredient4),
-  Quantite_Ingredient = QuantiteIngredient4
-  ORDER BY ID_Potion DESC LIMIT 1;
-
-  DELETE FROM `Se_compose`
-  WHERE ID_Ingredient = NULL;
+DELETE FROM `Se_compose`
+WHERE ID_Ingredient = 22;
 
 
+INSERT INTO Se_compose (`Quantite_Ingredient`, `ID_Potion`, `ID_Ingredient`)
+VALUES ( QuantiteIngredient5, @idpotion, @iding5);
 
- INSERT INTO Se_compose (ID_Potion,ID_Ingredient,Quantite_Ingredient)
-SELECT ID_Potion, '5', '1'
-FROM Potion
-ORDER BY ID_Potion DESC LIMIT 1;
-
- UPDATE Se_compose SET
- ID_Ingredient = (SELECT ID_Ingredient
- 	FROM Ingredient
- 	WHERE Nom_Ingredient = Ingredient5),
-  Quantite_Ingredient = QuantiteIngredient5
-  ORDER BY ID_Potion DESC LIMIT 1;
-
-
-  DELETE FROM `Se_compose`
-  WHERE ID_Ingredient = NULL;
-
-
-  DELETE FROM `Potion`
-  WHERE ID_Diluant = NULL;
-
+DELETE FROM `Se_compose`
+WHERE ID_Ingredient = 22;
 
  END |
  DELIMITER ;
