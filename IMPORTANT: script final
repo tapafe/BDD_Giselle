@@ -397,7 +397,8 @@ INSERT INTO `Ingredient`(`Nom_Ingredient`, `Prix_Ingredient`, `Temps_Conservatio
 ('bile de tatou', '18', '36', '30'),
 ('baies de gui', '13', '40', '28'),
 ('brins de valeriane', '12', '34', '28'),
-('corne de dragon', '120', '90', '70');
+('corne de dragon', '120', '90', '70')
+('NULL','0','0','0');
 
 
 INSERT INTO `Onguent` (`Nom_Onguent`, `Prix_Onguent`) VALUES
