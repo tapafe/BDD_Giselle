@@ -8,7 +8,7 @@ INNER JOIN Ingredient ON Se_compose.ID_Ingredient =Ingredient.ID_Ingredient)
 INNER JOIN est_compose ON Ingredient.ID_Ingredient = est_compose.ID_Ingredient)
 INNER JOIN Onguent ON est_compose.ID_Onguent = Onguent.ID_Onguent)
 Where Ingredient.Nom_Ingredient = 'chenilles'
-AND Valide_Potion = 'Valide';
+AND Valider_Potion = 'Valider';
 
 
 
@@ -19,7 +19,7 @@ FROM ((((Potion INNER JOIN Se_compose ON Potion.ID_Potion = Se_compose.ID_Potion
 INNER JOIN Ingredient ON Se_compose.ID_Ingredient =Ingredient.ID_Ingredient)
 INNER JOIN est_compose ON Ingredient.ID_Ingredient = est_compose.ID_Ingredient)
 INNER JOIN Onguent ON est_compose.ID_Onguent = Onguent.ID_Onguent)
-WHERE Valide_Potion = 'Valide'
+WHERE Valider_Potion = 'Valider'
 AND Se_compose.ID_Ingredient IN (
 SELECT ID_Ingredient
 FROM est_compose )
@@ -30,7 +30,7 @@ Requête N°3
 
 SELECT Diluant.Nom_Diluant, Potion.Nom_Potion
 FROM (Diluant INNER JOIN Potion ON Potion.ID_Diluant = Diluant.ID_Diluant)
-WHERE Valide_Potion = 'Valide'
+WHERE Valider_Potion = 'Valider'
 ORDER BY Diluant.Nom_Diluant;
 
 
@@ -39,9 +39,8 @@ Requete N°4
 
 SELECT Potion.Nom_Potion, Potion.Temperature
 FROM Potion
-WHERE Valide_Potion = 'Valide'
+WHERE Valider_Potion = 'Valider'
 ORDER BY Potion.Temperature;
-
 
 
 
