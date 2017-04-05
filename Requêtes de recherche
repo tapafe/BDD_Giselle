@@ -76,17 +76,17 @@ IN Ingredient5 VARCHAR(255),IN QuantiteIngredient5 INT(11),
 IN PrixPotion DECIMAL (15,3),IN NomDiluant VARCHAR(255),IN Temperatur INT(255))
 
 
- BEGIN
+BEGIN
 
- INSERT INTO Potion (`Nom_Potion`,`Prix_Potion`, `Temperature`, `Valider_Potion`,`ID_Personne`,`ID_Diluant`)
- VALUES  ( NomPotion, PrixPotion, Temperatur, 'Attente',IDPersonne,(SELECT ID_Diluant FROM Diluant WHERE Nom_Diluant = NomDiluant));
+INSERT INTO Potion (`Nom_Potion`,`Prix_Potion`, `Temperature`, `Valider_Potion`,`ID_Personne`,`ID_Diluant`)
+VALUES  ( NomPotion, PrixPotion, Temperatur, 'Attente',IDPersonne,(SELECT ID_Diluant FROM Diluant WHERE Nom_Diluant = NomDiluant));
 
- SET @idpotion = (SELECT ID_Potion FROM Potion ORDER BY ID_Potion DESC LIMIT 1);
- SET @iding1 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient1);
- SET @iding2 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient2);
- SET @iding3 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient3);
- SET @iding4 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient4);
- SET @iding5 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient5);
+SET @idpotion = (SELECT ID_Potion FROM Potion ORDER BY ID_Potion DESC LIMIT 1);
+SET @iding1 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient1);
+SET @iding2 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient2);
+SET @iding3 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient3);
+SET @iding4 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient4);
+SET @iding5 = (SELECT ID_Ingredient FROM Ingredient WHERE Nom_Ingredient = Ingredient5);
 
 INSERT INTO Se_compose (`Quantite_Ingredient`, `ID_Potion`, `ID_Ingredient`)
 VALUES ( QuantiteIngredient1, @idpotion, @iding1);
@@ -122,5 +122,5 @@ VALUES ( QuantiteIngredient5, @idpotion, @iding5);
 DELETE FROM `Se_compose`
 WHERE ID_Ingredient = 22;
 
- END |
- DELIMITER ;
+END |
+DELIMITER ;
