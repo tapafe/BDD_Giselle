@@ -157,3 +157,21 @@ NOT IN (SELECT Se_compose.ID_Potion
         INNER JOIN est_compose ON Ingredient.ID_Ingredient = est_compose.ID_Ingredient)
         INNER JOIN Onguent ON est_compose.ID_Onguent = Onguent.ID_Onguent)
         WHERE Se_compose.ID_Ingredient != est_compose.ID_Ingredient);
+        
+        
+        
+        
+        
+        
+        
+        
+        SELECT Potion.Nom_Potion, Onguent.Nom_Onguent, COUNT(Se_compose.ID_Ingredient) AS NB
+FROM ((((Potion INNER JOIN Se_compose ON Potion.ID_Potion = Se_compose.ID_Potion)
+INNER JOIN Ingredient ON Se_compose.ID_Ingredient = Ingredient.ID_Ingredient)
+INNER JOIN est_compose ON Ingredient.ID_Ingredient = est_compose.ID_Ingredient)
+INNER JOIN Onguent ON est_compose.ID_Onguent = Onguent.ID_Onguent) 
+GROUP BY Potion.Nom_Potion, Onguent.Nom_Onguent
+HAVING NB IN (SELECT COUNT(ID_Ingredient)
+            FROM est_compose
+            GROUP BY ID_Onguent)
+        AND NB >=3;
