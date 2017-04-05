@@ -57,7 +57,12 @@ GROUP BY Potion.Nom_Potion;
 
 
 
-Requette d ajout de potion
+Requette d ajout de potion : il faut bien mettre NULL au nom de la potion si il n y en a pas   
+
+CALL AjoutRecette(1,'final','epines de poro',4,'oeuf de dragon',3,'ecaille de dragon',10,'NULL',0,'NULL',0,5000.000,'Eau',30);
+
+
+
 
 
 
