@@ -175,3 +175,35 @@ HAVING NB IN (SELECT COUNT(ID_Ingredient)
             FROM est_compose
             GROUP BY ID_Onguent)
         AND NB >=3;
+
+
+
+
+
+      SELECT vu1.Nom_Potion, vu1.Nom_Onguent
+      FROM
+          ((SELECT Potion.Nom_Potion, Onguent.Nom_Onguent, COUNT(Se_compose.ID_Ingredient) AS NB
+          FROM ((((Potion INNER JOIN Se_compose ON Potion.ID_Potion = Se_compose.ID_Potion)
+          INNER JOIN Ingredient ON Se_compose.ID_Ingredient = Ingredient.ID_Ingredient)
+          INNER JOIN est_compose ON Ingredient.ID_Ingredient = est_compose.ID_Ingredient)
+          INNER JOIN Onguent ON est_compose.ID_Onguent = Onguent.ID_Onguent)
+          GROUP BY Potion.Nom_Potion, Onguent.Nom_Onguent
+          HAVING NB  IN  (SELECT COUNT(ID_Ingredient)
+                      FROM Se_compose
+                    GROUP BY ID_Potion)
+          ) AS vu1
+          INNER JOIN (
+            SELECT COUNT(ID_Ingredient) AS NB1,Potion.ID_Potion, Potion.Nom_Potion
+                        FROM Se_compose INNER JOIN Potion ON (Potion.ID_Potion = Se_compose.ID_Potion)
+                      GROUP BY ID_Potion
+          ) AS vu2
+          ON (vu1.Nom_Potion = vu2.Nom_Potion))
+
+          INNER JOIN (
+            SELECT COUNT(ID_Ingredient) AS NB2,Onguent.ID_Onguent, Onguent.Nom_Onguent
+                        FROM est_compose INNER JOIN Onguent ON (Onguent.ID_Onguent = est_compose.ID_Onguent)
+                      GROUP BY ID_Onguent
+          ) AS vu3
+          ON (vu1.Nom_Onguent = vu3.Nom_Onguent)
+          WHERE vu1.NB =vu2.NB1
+          AND vu1.NB = vu3.NB2;
